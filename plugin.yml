@@ -18,7 +18,9 @@ version: 0.0.5
 #     This is denoted by a minor API bump, e.g. 2.0.0 -> 2.1.0. The server will load plugins with an equivalent or older minor version.
 # - Minor bug fixes or insignificant alterations to the API.
 #     This is denoted by a patch bump, e.g. 1.13.0 -> 1.13.1
-api: 3.0.0
+api:
+- 3.0.0
+- 4.0.0
 
 depend:
 - Database
