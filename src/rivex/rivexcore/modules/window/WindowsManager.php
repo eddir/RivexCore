@@ -39,6 +39,7 @@ use rivex\rivexcore\modules\window\primal\AccountWindow;
 use rivex\rivexcore\modules\window\primal\ContactWindow;
 use rivex\rivexcore\modules\window\primal\LegendWindow;
 use rivex\rivexcore\modules\window\primal\CommandsWindow;
+use rivex\rivexcore\modules\window\primal\ServersWindow;
 use rivex\rivexcore\utils\exception\LogicException;
 
 class WindowsManager implements Listener
@@ -97,6 +98,7 @@ class WindowsManager implements Listener
 		$this->add(ContactWindow::class);
 		$this->add(LegendWindow::class);
 		$this->add(CommandsWindow::class);
+		$this->add(ServersWindow::class);
     }
 
     public function add($window)

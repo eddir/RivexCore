@@ -31,7 +31,7 @@ class AccountWindow extends BaseWindow implements Window
 
     public function __construct($id)
     {
-        $this->ui = new Custom("Аккаунт");
+        $this->ui = new Custom("§9Аккаунт");
         parent::__construct($id, 'account');
     }
 
@@ -39,16 +39,17 @@ class AccountWindow extends BaseWindow implements Window
     {
         return $this;
     }
-	
-	public function prepare(Player $player)
-	{
-		$this->ui->clean();
-		$this->ui->addElement(new Label(
-			"Ник: ".$player->getName()
-		));
-		$this->serialize();
-		return true;
-	}
+
+    public function prepare(Player $player)
+    {
+        $this->ui->clean();
+        $this->ui->addElement(new Label(
+            "§2Ваш никнейм: " . $player->getName() .
+            "\nВы находитесь на сервере: " . Main::getServerName()
+        ));
+        $this->serialize();
+        return true;
+    }
 
     /**
      * @param Player $player

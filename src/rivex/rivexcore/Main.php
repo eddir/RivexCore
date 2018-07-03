@@ -23,6 +23,7 @@ use pocketmine\Player;
 
 use pocketmine\plugin\PluginBase;
 
+use pocketmine\Server;
 use rivex\DataBase\Connection;
 
 use rivex\rivexcore\command\AnswerReport;
@@ -208,6 +209,20 @@ class Main extends PluginBase
         ;
     }
 
+    public static function getServerName(): string
+    {
+        $port = Server::getInstance()->getPort();
+        switch ($port) {
+            case 19132:
+            case 19134:
+                return "Хаб";
+                break;
+            case 19131:
+            case 19133:
+                return "Выживание в космосе";
+                break;
+        }
+    }
     /**
      * @return array
      */

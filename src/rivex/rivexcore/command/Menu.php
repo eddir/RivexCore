@@ -33,7 +33,6 @@ class Menu extends RivexCommand
     public function execute(CommandSender $sender, string $commandLabel, array $args)
     {
         if ($sender instanceof Player) {
-            var_dump("готовим");
             $this->getMain()->getWindows()->getByName("help")->show($sender);
         } else {
             $sender->sendMessage("Команда доступна в игре");

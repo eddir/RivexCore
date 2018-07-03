@@ -33,7 +33,9 @@ class CommandsWindow extends BaseWindow implements Window
     {
         $this->ui = new Custom("Доступные команды");
 		$this->ui->addElement(new Label(
-			"/rg help - помощь по приватам"
+			"§b/rg help §7- §2помощь по приватам".
+			"\n§b/menu §7- §2меню сервера".
+			"\n§b/spawn §7- §2вернуться на спавн"
 		));
         parent::__construct($id, 'commands');
     }

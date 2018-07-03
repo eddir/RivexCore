@@ -17,6 +17,8 @@ namespace rivex\rivexcore\modules\window\primal\command;
  */
 
 use pocketmine\Player;
+
+use rivex\rivexcore\Main;
 use rivex\rivexcore\modules\window\BaseWindow;
 use rivex\rivexcore\modules\window\element\Button;
 use rivex\rivexcore\modules\window\type\Menu;
@@ -25,14 +27,20 @@ use rivex\rivexcore\modules\window\Window;
 class HelpWindow extends BaseWindow implements Window
 {
 
-    const FIRST_BOTTOM = 0;
-
     public function __construct($id)
     {
-        $this->ui = new Menu("Меню");
-        $this->ui->addButton(new Button("Button.1"));
-        $this->ui->addButton(new Button("Button.2"));
+        $this->ui = new Menu("§9Выберите пункт меню");
+        $this->ui->addButton(new Button("§2Мой профиль"));
+        $this->ui->addButton(new Button("§2Легенда"));
+        $this->ui->addButton(new Button("§2Сменить сервер"));
+        $this->ui->addButton(new Button("§2Доступные мне команды"));
+        $this->ui->addButton(new Button("§2Связь с администрацией"));
         parent::__construct($id, 'help');
+    }
+
+    public function prepare(Player $player)
+    {
+        return true;
     }
 
     public function choice()
@@ -42,7 +50,23 @@ class HelpWindow extends BaseWindow implements Window
 
     public function handle(Player $player, $response)
     {
-        \rivex\rivexcore\Main::getInstance()->getWindows()->getByName('login')->show($player);
+        switch ($response) {
+            case 0:
+                Main::getInstance()->getWindows()->getByName("account")->show($player);
+                break;
+            case 1:
+                Main::getInstance()->getWindows()->getByName("legend")->show($player);
+                break;
+            case 2:
+                Main::getInstance()->getWindows()->getByName("servers")->show($player);
+                break;
+            case 3:
+                Main::getInstance()->getWindows()->getByName("commands")->show($player);
+                break;
+            case 4:
+                Main::getInstance()->getWindows()->getByName("contact")->show($player);
+                break;
+        }
     }
 
 }
