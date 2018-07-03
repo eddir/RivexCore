@@ -32,6 +32,7 @@ use rivex\rivexcore\command\Menu;
 use rivex\rivexcore\command\override\Give;
 use rivex\rivexcore\command\override\Help;
 use rivex\rivexcore\command\Report;
+use rivex\rivexcore\command\Spawn;
 use rivex\rivexcore\listener\CallbackListener;
 use rivex\rivexcore\listener\EventListener;
 use rivex\rivexcore\listener\WorldProtection;
@@ -169,7 +170,8 @@ class Main extends PluginBase
             new AnswerReport($this),
             new Help($this),
             new Menu($this),
-            new EntityKill($this)
+            new EntityKill($this),
+            new Spawn($this)
         ];
 
         $aliased = [];

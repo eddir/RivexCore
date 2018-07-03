@@ -51,6 +51,9 @@ permissions:
     default: false
     description: "Allows to use commands"
     children:
+     rivex.command.spawn:
+      default: true
+      description: "Allows to teleport to spawn location"
      rivex.command.help:
       default: true
       deacription: "Allows to get info from help command"
