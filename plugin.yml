@@ -1,5 +1,5 @@
 #Name of your plugin. This is self-explanatory. Plugin names SHOULD NOT contain spaces.
-name: RivexCore
+name: Rivexcore
 
 #Fully-qualified class-name of your plugin's main class. This is usually the one that extends PluginBase.
 #Since PocketMine-MP's autoloader is PSR-0, your plugin's main-class namespace will usually be the same as the folder path.
@@ -19,6 +19,9 @@ version: 0.0.5
 # - Minor bug fixes or insignificant alterations to the API.
 #     This is denoted by a patch bump, e.g. 1.13.0 -> 1.13.1
 api: 3.0.0
+
+depend:
+- Database
 
 #When to load the plugin. There are currently two options for this: STARTUP and POSTWORLD. Usually POSTWORLD will do fine.
 load: STARTUP

@@ -85,7 +85,7 @@ class Main extends PluginBase
 			$this->getLogger()->warning('Устаревшая версия конфига. Удалите его для генерирования нового.');
 		}
 
-        $database = $this->getServer()->getPluginManager()->getPlugin('DataBase');
+        $database = $this->getServer()->getPluginManager()->getPlugin('Database');
         /** @var $database \rivex\DataBase\Main */
         if ($database) {
             $this->dbLocal = $database->getLocal();
