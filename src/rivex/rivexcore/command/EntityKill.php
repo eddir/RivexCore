@@ -34,7 +34,7 @@ class EntityKill extends RivexCommand
     public function execute(CommandSender $sender, string $commandLabel, array $args)
     {
         if ($sender instanceof Player) {
-            $this->getMain()->getEvents()->callback("EntiryDamageByEntityEvent",
+            $this->getMain()->getEvents()->callback("EntityDamageByEntityEvent",
                 function (EntityDamageByEntityEvent $event, array $args) {
                     $damager = $event->getDamager();
                     /** @var Player $player */

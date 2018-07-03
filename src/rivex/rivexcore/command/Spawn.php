@@ -47,5 +47,6 @@ class Spawn extends RivexCommand
                 $sender->sendMessage("Необходимо указывать ник");
             }
         }
+        return true;
     }
 }

@@ -10,7 +10,7 @@ namespace rivex\rivexcore\listener;
 
 
 use pocketmine\event\entity\EntityDamageByEntityEvent;
-use pocketmine\event\entity\EntityDeathEvent;
+
 use pocketmine\event\Listener;
 use rivex\rivexcore\Main;
 
