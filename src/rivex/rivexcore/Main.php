@@ -26,11 +26,13 @@ use pocketmine\plugin\PluginBase;
 use rivex\DataBase\Connection;
 
 use rivex\rivexcore\command\AnswerReport;
+use rivex\rivexcore\command\EntityKill;
 use rivex\rivexcore\command\Fraction;
 use rivex\rivexcore\command\Menu;
 use rivex\rivexcore\command\override\Give;
 use rivex\rivexcore\command\override\Help;
 use rivex\rivexcore\command\Report;
+use rivex\rivexcore\listener\CallbackListener;
 use rivex\rivexcore\listener\EventListener;
 use rivex\rivexcore\listener\WorldProtection;
 use rivex\rivexcore\modules\fraction\FractionManager;
@@ -53,10 +55,16 @@ class Main extends PluginBase
     private $dbLocal, $dbGlobal;
     /** @var WindowsManager */
     private $windows;
+    /** @var FractionManager */
     private $fractions;
+    /** @var array */
     private $users = array();
+    /** @var Test */
     private $test;
+    /** @var WorkQueue */
     private $workQueue;
+    /** @var CallbackListener */
+    private $events;
 
     /**
      * @return Main
@@ -85,7 +93,7 @@ class Main extends PluginBase
 			$this->getLogger()->warning('Устаревшая версия конфига. Удалите его для генерирования нового.');
 		}
 
-        $database = $this->getServer()->getPluginManager()->getPlugin('Database');
+        $database = $this->getServer()->getPluginManager()->getPlugin('DataBase');
         /** @var $database \rivex\DataBase\Main */
         if ($database) {
             $this->dbLocal = $database->getLocal();
@@ -96,9 +104,11 @@ class Main extends PluginBase
         }
 
         $this->windows = new WindowsManager($this);
+        $this->events = new CallbackListener($this);
         $this->registerCommands();
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
         $this->getServer()->getPluginManager()->registerEvents($this->windows, $this);
+        $this->getServer()->getPluginManager()->registerEvents($this->events, $this);
 
         $this->workQueue = new WorkQueue($this);
         $this->workQueue->init();
@@ -158,7 +168,8 @@ class Main extends PluginBase
             new Report($this),
             new AnswerReport($this),
             new Help($this),
-            new Menu($this)
+            new Menu($this),
+            new EntityKill($this)
         ];
 
         $aliased = [];
@@ -262,5 +273,13 @@ class Main extends PluginBase
     public function getWorkQueue(): WorkQueue
     {
         return $this->workQueue;
+    }
+
+    /**
+     * @return CallbackListener
+     */
+    public function getEvents(): CallbackListener
+    {
+        return $this->events;
     }
 }

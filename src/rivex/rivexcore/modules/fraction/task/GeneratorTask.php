@@ -25,7 +25,7 @@ class GeneratorTask extends Task
     private $module;
     private $step = false;
 
-    public function __construct(FractionManager $module)
+    public function __construct($module)
     {
         $this->module = $module;
     }

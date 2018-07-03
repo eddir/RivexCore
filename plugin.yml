@@ -1,5 +1,5 @@
 #Name of your plugin. This is self-explanatory. Plugin names SHOULD NOT contain spaces.
-name: Rivexcore
+name: RivexCore
 
 #Fully-qualified class-name of your plugin's main class. This is usually the one that extends PluginBase.
 #Since PocketMine-MP's autoloader is PSR-0, your plugin's main-class namespace will usually be the same as the folder path.
@@ -23,7 +23,7 @@ api:
 - 4.0.0
 
 depend:
-- Database
+- DataBase
 
 #When to load the plugin. There are currently two options for this: STARTUP and POSTWORLD. Usually POSTWORLD will do fine.
 load: STARTUP
@@ -60,6 +60,9 @@ permissions:
      rivex.command.fraction:
       default: true
       description: "Allows to use fraction command"
+     rivex.command.ekill:
+      description: "Allows to permanetly kill entity"
+      default: op
      rivex.command.give:
       default: false
       description: "Allows to give items by command"
