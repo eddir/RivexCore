@@ -3,25 +3,33 @@
 namespace rivex\rivexcore;
 
 use pocketmine\Player;
+
 use rivex\rivexcore\modules\window\primal\command\ReportWindow;
 
 
 class User
 {
-
+    /** @var Main */
     private $main;
-
+    /** @var Player */
     private $player;
-
+    /** @var string */
     private $fraction;
-
+    /** @var int */
     private $kills = 0;
+    /** @var int */
     private $deaths = 0;
+    /** @var int */
     private $rank = 0;
 
     //TODO or not to-do?
     private $lastlogin, $firstlogin;
 
+    /**
+     * User constructor.
+     * @param Player $player
+     * @param Main $main
+     */
     public function __construct(Player $player, Main $main)
     {
         $this->player = $player;
@@ -37,11 +45,19 @@ class User
         }
     }
 
-    public function getFraction()
+    /**
+     * @return string
+     */
+    public function getFraction(): string
     {
         return $this->fraction;
     }
 
+    /**
+     * @param $fraction
+     * @param int $rank
+     * @param bool $update
+     */
     public function setFraction($fraction, $rank = 0, $update = true)
     {
         if ($update)
@@ -62,7 +78,11 @@ class User
         return $this->rank;
     }
 
-    public static function getStringRank($rank = null)
+    /**
+     * @param int|null $rank
+     * @return string
+     */
+    public static function getStringRank($rank = null): string
     {
         switch ($rank) {
             case 0:
@@ -77,7 +97,26 @@ class User
         }
     }
 
-    public function getDeaths()
+    /**
+     * @return array
+     */
+    public function getParcels(): array
+    {
+        return $this->getMain()->getDbGlobal()->fetch_array("SELECT * FROM parcels WHERE player = #s AND server = #s", $this->player->getName(), $this->getMain()->getServer()->getPort());
+    }
+
+    /**
+     * @return array
+     */
+    public function getMail(): array
+    {
+        return $this->getMain()->getDbGlobal()->fetch_array("SELECT * FROM  mail WHERE player = #s", $this->player->getName());
+    }
+
+    /**
+     * @return int
+     */
+    public function getDeaths(): int
     {
         return $this->deaths;
     }
@@ -87,7 +126,10 @@ class User
         $this->getMain()->getDbLocal()->query('UPDATE `users` SET `deaths` = #d WHERE `name` = #s', ++$this->deaths, $this->getPlayer()->getLowerCaseName());
     }
 
-    public function getKills()
+    /**
+     * @return int
+     */
+    public function getKills(): int
     {
         return $this->kills;
     }
@@ -97,7 +139,10 @@ class User
         $this->getMain()->getDbLocal()->query('UPDATE `users` SET `kills` = #d WHERE `name` = #s', ++$this->kills, $this->getPlayer()->getLowerCaseName());
     }
 
-    public function getMain()
+    /**
+     * @return Main
+     */
+    public function getMain(): Main
     {
         return $this->main;
     }

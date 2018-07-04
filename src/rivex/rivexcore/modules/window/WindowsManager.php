@@ -39,6 +39,9 @@ use rivex\rivexcore\modules\window\primal\AccountWindow;
 use rivex\rivexcore\modules\window\primal\ContactWindow;
 use rivex\rivexcore\modules\window\primal\LegendWindow;
 use rivex\rivexcore\modules\window\primal\CommandsWindow;
+use rivex\rivexcore\modules\window\primal\MailboxWindow;
+use rivex\rivexcore\modules\window\primal\MailWindow;
+use rivex\rivexcore\modules\window\primal\ParcelWindow;
 use rivex\rivexcore\modules\window\primal\ServersWindow;
 use rivex\rivexcore\utils\exception\LogicException;
 
@@ -47,10 +50,8 @@ class WindowsManager implements Listener
 
     // Комментария на русском, о да. Кодировка, не бей!!(9
 
-    // TODO: это костыль. Авторизация уже не использует другой плагин
-    // для создания форм. Однако остаётся возможность существования
-    // такого плагина в будущем.
-    const FIRST_ID = 500;
+    // TODO: это костыль. Некоторые плагины тоже пользуются формами.
+    const FIRST_ID = 1000;
 
     /** @var int */
     private $currentId = self::FIRST_ID;
@@ -99,6 +100,9 @@ class WindowsManager implements Listener
 		$this->add(LegendWindow::class);
 		$this->add(CommandsWindow::class);
 		$this->add(ServersWindow::class);
+		$this->add(MailboxWindow::class);
+		$this->add(MailWindow::class);
+		$this->add(ParcelWindow::class);
     }
 
     public function add($window)
@@ -120,6 +124,13 @@ class WindowsManager implements Listener
         }
         $this->windows[$window->getId()] = $window;
         return $window;
+    }
+
+    public function unregister(Window $window)
+    {
+        if (isset($this->windows[$window->getId()])) {
+            unset($this->windows[$window->getId()]);
+        }
     }
 
     /**

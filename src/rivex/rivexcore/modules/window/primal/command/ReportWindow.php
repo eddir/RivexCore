@@ -38,6 +38,7 @@ class ReportWindow extends BaseWindow implements Window
 
     public function choice()
     {
+        // TODO: а не слишком ли это затратно?
         return Main::getInstance()->getWindows()->add(self::class);
     }
 
@@ -86,7 +87,7 @@ class ReportWindow extends BaseWindow implements Window
                         $read = socket_read($socket, 1024);
                         if (trim($read) == 'OK') {
                             socket_write($socket, $request . "\n", strlen($request) + 1);
-                            $read = socket_read($socket, 1024);
+                            socket_read($socket, 1024);
                             socket_close($socket);
                             $player->sendMessage('§aСообщение отправлено администраторам!');
                         } else {
@@ -109,6 +110,7 @@ class ReportWindow extends BaseWindow implements Window
         } else {
             $player->sendMessage('§eСообщение слишком короткое!');
         }
+        $this->close();
     }
 
     private function translateRate($key)

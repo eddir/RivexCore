@@ -24,6 +24,7 @@ api:
 
 depend:
 - DataBase
+- RShopSE
 
 #When to load the plugin. There are currently two options for this: STARTUP and POSTWORLD. Usually POSTWORLD will do fine.
 load: STARTUP

@@ -20,4 +20,8 @@ class PluginWindow extends BaseWindow
         return $this->owner;
     }
 
+    public function choice()
+    {
+        return $this;
+    }
 }

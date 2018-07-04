@@ -28,8 +28,6 @@ use rivex\rivexcore\modules\window\Window;
 class MembersFractionWindow extends BaseWindow implements Window
 {
 
-    protected $sessions = array();
-
     public function __construct($id)
     {
         $this->ui = new Custom("Участники клана");

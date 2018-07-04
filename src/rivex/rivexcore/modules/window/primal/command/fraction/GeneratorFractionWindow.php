@@ -17,7 +17,7 @@ namespace rivex\rivexcore\modules\window\primal\command\fraction;
  */
 
 use pocketmine\entity\Entity;
-use pocketmine\inventory\Inventory;
+
 use pocketmine\item\Item;
 use pocketmine\Player;
 use rivex\rivexcore\Main;
@@ -26,6 +26,7 @@ use rivex\rivexcore\modules\window\BaseWindow;
 use rivex\rivexcore\modules\window\element\Label;
 use rivex\rivexcore\modules\window\type\Custom;
 use rivex\rivexcore\modules\window\Window;
+use rivex\rivexcore\utils\InventoryManagement;
 
 class GeneratorFractionWindow extends BaseWindow implements Window
 {
@@ -55,8 +56,8 @@ class GeneratorFractionWindow extends BaseWindow implements Window
                     $needs = $fractions->getNeedsForGenerator($user->getFraction());
                     $this->ui->addElement(new Label('Попросите участников фракции собрать ресурсы для жителя. В будущем он будет приносить вам ресурсы. Участники клана могут сдавать свои ресурсы командой /fraction'));
                     $this->ui->addElement(new Label("Осталось собрать:\n§eДерево: §a" . $needs['generator_need_wood'] . "\n§eБулыжник: §a" . $needs['generator_need_cobblestone']));
-                    $user_wood = $this->getCountOf(Item::get(Item::WOOD), $player->getInventory());
-                    $user_cobblestone = $this->getCountOf(Item::get(Item::COBBLESTONE), $player->getInventory());
+                    $user_wood = InventoryManagement::getCountOf(Item::get(Item::WOOD), $player->getInventory());
+                    $user_cobblestone = InventoryManagement::getCountOf(Item::get(Item::COBBLESTONE), $player->getInventory());
                     if ($user_wood > $needs['generator_need_wood']) {
                         $user_wood = $needs['generator_need_wood'];
                     }
@@ -71,8 +72,8 @@ class GeneratorFractionWindow extends BaseWindow implements Window
                 } else {
                     $needs = $fractions->getNeedsForGenerator($user->getFraction());
                     $this->ui->addElement(new Label("Осталось собрать:\n§eДерево: §a" . $needs['generator_need_wood'] . "\n§eБулыжник: §a" . $needs['generator_need_cobblestone']));
-                    $user_wood = $this->getCountOf(Item::get(Item::WOOD), $player->getInventory());
-                    $user_cobblestone = $this->getCountOf(Item::get(Item::COBBLESTONE), $player->getInventory());
+                    $user_wood = InventoryManagement::getCountOf(Item::get(Item::WOOD), $player->getInventory());
+                    $user_cobblestone = InventoryManagement::getCountOf(Item::get(Item::COBBLESTONE), $player->getInventory());
                     if ($user_wood > $needs['generator_need_wood']) {
                         $user_wood = $needs['generator_need_wood'];
                     }
@@ -96,8 +97,8 @@ class GeneratorFractionWindow extends BaseWindow implements Window
             $fractions = Main::getInstance()->getFractions();
             if (!$fractions->isGeneratorCreated($user->getFraction())) {
                 $needs = $fractions->getNeedsForGenerator($user->getFraction());
-                $user_wood = $this->getCountOf(Item::get(Item::WOOD), $player->getInventory());
-                $user_cobblestone = $this->getCountOf(Item::get(Item::COBBLESTONE), $player->getInventory());
+                $user_wood = InventoryManagement::getCountOf(Item::get(Item::WOOD), $player->getInventory());
+                $user_cobblestone = InventoryManagement::getCountOf(Item::get(Item::COBBLESTONE), $player->getInventory());
                 if (($user_wood > 0 || $user_cobblestone > 0) && $player->getGamemode() == Player::SURVIVAL) {
                     if ($user_wood > $needs['generator_need_wood']) {
                         $user_wood = $needs['generator_need_wood'];
@@ -106,8 +107,8 @@ class GeneratorFractionWindow extends BaseWindow implements Window
                         $user_cobblestone = $needs['generator_need_cobblestone'];
                     }
                     $fractions->addToGenerator($user->getFraction(), $user_wood, $user_cobblestone);
-                    $progress_wood = $this->removeFromInventory(Item::get(Item::WOOD, 0, $user_wood), $player->getInventory());
-                    $progress_cobblestone = $this->removeFromInventory(Item::get(Item::COBBLESTONE, 0, $user_cobblestone), $player->getInventory());
+                    $progress_wood = InventoryManagement::removeFromInventory(Item::get(Item::WOOD, 0, $user_wood), $player->getInventory());
+                    $progress_cobblestone = InventoryManagement::removeFromInventory(Item::get(Item::COBBLESTONE, 0, $user_cobblestone), $player->getInventory());
                     if ($user_wood == $needs['generator_need_wood'] && $user_cobblestone == $needs['generator_need_cobblestone']) {
                         $player->sendMessage('§eПринято. Лидер фракции может теперь призвать жителя!');
                     } else {
@@ -125,34 +126,6 @@ class GeneratorFractionWindow extends BaseWindow implements Window
             }
         }
         return true;
-    }
-
-    private function getCountOf(Item $item, Inventory $inventory)
-    {
-        $count = 0;
-        foreach ($inventory->getContents() as $slot) {
-            if ($slot->getId() == $item->getId()) {
-                $count += $slot->getCount();
-            }
-        }
-        return $count;
-    }
-
-    public function removeFromInventory(Item $item, Inventory $inventory)
-    {
-        foreach ($inventory->getContents() as $slot => $content) {
-            if ($content->getId() == $item->getId()) {
-                if ($content->getCount() >= $item->getCount()) {
-                    $inventory->setItem($slot, Item::get($item->getId(), $item->getDamage(), $content->getCount() - $item->getCount()));
-                    $item->setCount(0);
-                    return true;
-                } else {
-                    $inventory->setItem($slot, Item::get(0));
-                    $item->setCount($item->getCount() - $content->getCount());
-                }
-            }
-        }
-        return false;
     }
 
 }

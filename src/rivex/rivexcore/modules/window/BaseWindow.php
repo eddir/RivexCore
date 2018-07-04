@@ -22,7 +22,7 @@ use rivex\rivexcore\Main;
 use rivex\rivexcore\modules\window\network\ModalFormRequestPacket;
 use rivex\rivexcore\modules\window\type\WindowType;
 
-abstract class BaseWindow
+abstract class BaseWindow implements Window
 {
     /** @var int */
     protected $id;
@@ -60,6 +60,11 @@ abstract class BaseWindow
             $player->sendMessage('§eТехническая неполадка не позволила вам сделать это. Сообщите администраторам код ошибки и они её исправят. Код: SHOW:' . $this->name);
             Main::getInstance()->getLogger()->error($e->getMessage() . ' ' . $e->getFile() . ' -> ' . $e->getLine());
         }
+    }
+
+    protected function close()
+    {
+        Main::getInstance()->getWindows()->unregister($this);
     }
 
     public function serialize()

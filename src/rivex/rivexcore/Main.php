@@ -16,8 +16,7 @@ namespace rivex\rivexcore;
  * January 2018
  */
 
-use pocketmine\command\Command;
-use pocketmine\command\CommandSender;
+
 use pocketmine\math\Vector2;
 use pocketmine\Player;
 
@@ -49,9 +48,9 @@ class Main extends PluginBase
 {
 
     const TEST = true;
-	
-	const CONFIG_VERSION = 1;
-	
+
+    const CONFIG_VERSION = 1;
+
     private static $instance;
     /** @var Connection */
     private $dbLocal, $dbGlobal;
@@ -85,45 +84,58 @@ class Main extends PluginBase
         if (!$this->checkVersion()) {
             $this->crash('Устаревшая версия ядра PocketMine! Требуется PMMP с поддержкой Forms-api.');
         }
-		
+
         if (!is_dir($this->getDataFolder())) {
             mkdir($this->getDataFolder());
         }
-		$this->saveDefaultConfig();
-		
-		if ($this->getConfig()->get('version', 0) < self::CONFIG_VERSION) {
-			$this->getLogger()->warning('Устаревшая версия конфига. Удалите его для генерирования нового.');
-		}
+        $this->saveDefaultConfig();
 
-        $database = $this->getServer()->getPluginManager()->getPlugin('DataBase');
-        /** @var $database \rivex\DataBase\Main */
-        if ($database) {
-            $this->dbLocal = $database->getLocal();
-            $this->dbGlobal = $database->getGlobal();
-            $this->fractions = new FractionManager($this);
-        } else {
-            $this->crash('Плагин DataBase не найден. Аварийное завершение!');
+        if ($this->getConfig()->get('version', 0) < self::CONFIG_VERSION) {
+            $this->getLogger()->warning('Устаревшая версия конфига. Удалите его для генерирования нового.');
         }
+        /** @var \rivex\DataBase\Main $database */
+        $database = $this->getServer()->getPluginManager()->getPlugin('DataBase');
+        $this->dbLocal = $database->getLocal();
+        $this->dbGlobal = $database->getGlobal();
 
+        $this->dbGlobal->createTable("mail", array(
+            "id" => "INT(6) NOT NULL AUTO_INCREMENT",
+            "player" => "VARCHAR(32) NOT NULL",
+            "sender" => "VARCHAR(32) NOT NULL",
+            "body" => "TEXT"
+        ));
+        $this->dbGlobal->createTable("parcels", array(
+            "id" => "MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT",
+            "player" => "VARCHAR(32) NOT NULL",
+            "item_id" => "TINYINT UNSIGNED NOT NULL",
+            "item_damage" => "TINYINT UNSIGNED NOT NULL",
+            "item_amount" => "TINYINT UNSIGNED NOT NULL",
+            "description" => "VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci",
+            "server" => "SMALLINT NOT NULL"
+        ));
+
+        $this->fractions = new FractionManager($this);
         $this->windows = new WindowsManager($this);
         $this->events = new CallbackListener($this);
-        $this->registerCommands();
+
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
         $this->getServer()->getPluginManager()->registerEvents($this->windows, $this);
         $this->getServer()->getPluginManager()->registerEvents($this->events, $this);
 
         $this->workQueue = new WorkQueue($this);
         $this->workQueue->init();
-		
-		$world_limit = $this->getConfig()->get('world-limit', array('radius' => 0));
-		if ($world_limit['radius'] > 0) {
-			$this->getScheduler()->scheduleRepeatingTask(new TerritoryLimitTask(
-				new Vector2($world_limit['x'], $world_limit['z']), $world_limit['radius']
-			), 60);
-		}
 
-		if ($this->getConfig()->get('protect-world', false)) {
-		    $this->getServer()->getPluginManager()->registerEvents(new WorldProtection($this), $this);
+        $this->registerCommands();
+
+        $world_limit = $this->getConfig()->get('world-limit', array('radius' => 0));
+        if ($world_limit['radius'] > 0) {
+            $this->getScheduler()->scheduleRepeatingTask(new TerritoryLimitTask(
+                new Vector2($world_limit['x'], $world_limit['z']), $world_limit['radius']
+            ), 60);
+        }
+
+        if ($this->getConfig()->get('protect-world', false)) {
+            $this->getServer()->getPluginManager()->registerEvents(new WorldProtection($this), $this);
         }
 
         new Generator($this);
@@ -186,24 +198,6 @@ class Main extends PluginBase
         $this->getServer()->getCommandMap()->registerAll("rivexcore", $commands);
     }
 
-    /**
-     * @param CommandSender $sender
-     * @param Command $command
-     * @param string $label
-     * @param string[] $args
-     * @return bool
-     */
-    public function onCommand(CommandSender $sender, Command $command, string $label, array $args): bool
-    {
-        switch ($command->getName()) {
-            case "examplecommand":
-                $sender->sendMessage("Example command output");
-                return true;
-            default:
-                return false;
-        }
-    }
-
     public function onDisable()
     {
         ;
@@ -222,7 +216,9 @@ class Main extends PluginBase
                 return "Выживание в космосе";
                 break;
         }
+        return "Чёрная дыра";
     }
+
     /**
      * @return array
      */
@@ -235,7 +231,7 @@ class Main extends PluginBase
      * @param $name
      * @return User
      */
-    public function getUser($name): User
+    public function getUser(string $name): User
     {
         $name = strtolower($name);
         return isset($this->users[$name]) ? $this->users[$name] : null;
@@ -274,12 +270,18 @@ class Main extends PluginBase
         return $this->fractions;
     }
 
-    public function getDbLocal()
+    /**
+     * @return Connection
+     */
+    public function getDbLocal(): Connection
     {
         return $this->dbLocal;
     }
 
-    public function getDbGlobal()
+    /**
+     * @return Connection
+     */
+    public function getDbGlobal(): Connection
     {
         return $this->dbGlobal;
     }

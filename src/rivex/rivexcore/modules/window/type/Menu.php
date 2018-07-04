@@ -84,9 +84,19 @@ class Menu implements WindowType, \JsonSerializable
         return $this->buttons[$response]->handle($response, $player);
     }
 
+    public function clean()
+    {
+        $this->buttons = array();
+    }
+
     final public function getTitle()
     {
         return $this->title;
+    }
+
+    public function setTitle(string $value)
+    {
+        $this->title = $value;
     }
 
     public function getContent(): array

@@ -66,7 +66,6 @@ class InvitesFractionWindow extends BaseWindow implements Window
 
     public function handle(Player $player, $response)
     {
-        $user = Main::getInstance()->getUser($player->getName());
         if (isset($response[0]) && !empty($response[0])) {
             if (Main::getInstance()->getFractions()->exists($response[0])) {
                 Main::getInstance()->getFractions()->addInvite($player->getName(), $response[0]);
