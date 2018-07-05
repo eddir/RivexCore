@@ -1,6 +1,8 @@
 #Name of your plugin. This is self-explanatory. Plugin names SHOULD NOT contain spaces.
 name: RivexCore
 
+#Ля, шо происходит
+
 #Fully-qualified class-name of your plugin's main class. This is usually the one that extends PluginBase.
 #Since PocketMine-MP's autoloader is PSR-0, your plugin's main-class namespace will usually be the same as the folder path.
 main: rivex\rivexcore\Main
