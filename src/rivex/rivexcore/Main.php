@@ -1,7 +1,7 @@
 <?php
 
 namespace rivex\rivexcore;
-
+// коммент
 /*
  * RivexCore
  *
