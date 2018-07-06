@@ -58,7 +58,6 @@ class SpaceGenerator extends Generator
     private $generationPopulators = [];
 
     // Хрен его знает что это, но без него не работает. Так ещё и псевдоконстанта.
-    private $populators = [];
     private $noiseBase;
     private $options;
 

@@ -31,6 +31,8 @@ class Report extends RivexCommand
             return false;
         }
         if ($sender instanceof Player) {
+            $sender->sendMessage("Временно не работает");
+            return true;
             // TODO: убрать declare dynamicly и сделать другое сохранение вопроса
             /** @var RegisterWindow $window */
             $window = $this->getMain()->getWindows()->getByName('report');
@@ -50,7 +52,7 @@ class Report extends RivexCommand
                     $read = socket_read($socket, 1024);
                     if (trim($read) == 'OK') {
                         socket_write($socket, $request . "\n", strlen($request) + 1);
-                        $read = socket_read($socket, 1024);
+                        socket_read($socket, 1024);
                     }
                     socket_close($socket);
                 } else {

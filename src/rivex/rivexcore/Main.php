@@ -26,8 +26,10 @@ use pocketmine\Server;
 use rivex\DataBase\Connection;
 
 use rivex\rivexcore\command\AnswerReport;
+use rivex\rivexcore\command\DeleteHome;
 use rivex\rivexcore\command\EntityKill;
 use rivex\rivexcore\command\Fraction;
+use rivex\rivexcore\command\Home;
 use rivex\rivexcore\command\Menu;
 use rivex\rivexcore\command\override\Give;
 use rivex\rivexcore\command\override\Help;
@@ -113,6 +115,14 @@ class Main extends PluginBase
             "description" => "VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci",
             "server" => "SMALLINT NOT NULL"
         ));
+        $this->dbLocal->createTable("homes", array(
+            "id" => "MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT",
+            "player" => "VARCHAR(32) NOT NULL",
+            "name" => "VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci",
+            "x" => "SMALLINT NOT NULL",
+            "y" => "SMALLINT NOT NULL",
+            "z" => "SMALLINT NOT NULL",
+        ));
 
         $this->fractions = new FractionManager($this);
         $this->windows = new WindowsManager($this);
@@ -184,7 +194,9 @@ class Main extends PluginBase
             new Help($this),
             new Menu($this),
             new EntityKill($this),
-            new Spawn($this)
+            new Spawn($this),
+            new Home($this),
+            new DeleteHome($this)
         ];
 
         $aliased = [];

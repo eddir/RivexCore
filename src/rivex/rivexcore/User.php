@@ -2,6 +2,7 @@
 
 namespace rivex\rivexcore;
 
+use pocketmine\math\Vector3;
 use pocketmine\Player;
 
 use rivex\rivexcore\modules\window\primal\command\ReportWindow;
@@ -43,6 +44,27 @@ class User
         } else {
             $this->getMain()->getDbLocal()->query('INSERT INTO `users` (`name`) VALUES(#s)', $this->getPlayer()->getLowerCaseName());
         }
+    }
+
+    public function getHomes(): array
+    {
+        return $this->getMain()->getDbLocal()->fetch_array('SELECT * FROM homes WHERE player = #s', $this->player->getName());
+    }
+
+    public function getHomeCount(): int
+    {
+        return $this->getMain()->getDbLocal()->num_rows('SELECT id FROM homes WHERE player = #s', $this->player->getName());
+    }
+
+    public function setHome(string $name, Vector3 $position)
+    {
+        $this->getMain()->getDbLocal()->query('INSERT INTO homes (player, name, x, y, z) VALUES (#s, #s, #d, #d, #d)',
+            $this->getPlayer()->getName(), $name, $position->x, $position->y, $position->z);
+    }
+
+    public function removeHome(int $id)
+    {
+        $this->getMain()->getDbLocal()->query('DELETE FROM homes WHERE id = #d', $id);
     }
 
     /**

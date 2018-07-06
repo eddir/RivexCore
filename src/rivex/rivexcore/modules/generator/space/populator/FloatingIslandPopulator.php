@@ -100,7 +100,6 @@ class FloatingIslandPopulator extends AmountPopulator
     {
         $pos = $pos->round();
         $currentLen = 1;
-        $hBound = 0;
         $current = 0;
         for ($y = $pos->y - 1; $radius > 0; $y--) {
             for ($x = $pos->x - $radius; $x <= $pos->x + $radius; $x++) {
@@ -125,7 +124,6 @@ class FloatingIslandPopulator extends AmountPopulator
                 }
             }
             $current++;
-            $oldHB = $hBound;
             $hBound = $random->nextFloat();
             if ($current >= $currentLen + $hBound) {
                 if ($radius == 0) return $pos->y;

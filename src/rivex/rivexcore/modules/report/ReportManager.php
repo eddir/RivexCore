@@ -30,8 +30,6 @@ class ReportManager
     public const DEPUTY = 2;
     public const MEMBER = 3;
 
-    private $sessions = array();
-
     public function __construct(Main $main)
     {
         $this->main = $main;

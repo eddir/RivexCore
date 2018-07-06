@@ -16,11 +16,13 @@ namespace rivex\rivexcore\modules\window;
  * January 2018
  */
 
+use Ds\Set;
 use pocketmine\event\Listener;
 use pocketmine\event\server\DataPacketReceiveEvent;
 use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
 use rivex\rivexcore\Main;
 
+use rivex\rivexcore\modules\window\primal\command\DeletehomeWindow;
 use rivex\rivexcore\modules\window\primal\command\fraction\CreateFractionWindow;
 use rivex\rivexcore\modules\window\primal\command\fraction\FractionWindow;
 use rivex\rivexcore\modules\window\primal\command\fraction\GeneratorFractionWindow;
@@ -32,10 +34,12 @@ use rivex\rivexcore\modules\window\primal\command\fraction\RemoveFractionWindow;
 use rivex\rivexcore\modules\window\primal\command\fraction\StatusFractionWindow;
 use rivex\rivexcore\modules\window\primal\command\fraction\TopFractionWindow;
 use rivex\rivexcore\modules\window\primal\command\HelpWindow;
+use rivex\rivexcore\modules\window\primal\command\HomesWindow;
 use rivex\rivexcore\modules\window\primal\command\ReportWindow;
 
 
 use rivex\rivexcore\modules\window\primal\AccountWindow;
+use rivex\rivexcore\modules\window\primal\command\SethomeWindow;
 use rivex\rivexcore\modules\window\primal\ContactWindow;
 use rivex\rivexcore\modules\window\primal\LegendWindow;
 use rivex\rivexcore\modules\window\primal\CommandsWindow;
@@ -51,7 +55,7 @@ class WindowsManager implements Listener
     // Комментария на русском, о да. Кодировка, не бей!!(9
 
     // TODO: это костыль. Некоторые плагины тоже пользуются формами.
-    const FIRST_ID = 1000;
+    const FIRST_ID = 2000;
 
     /** @var int */
     private $currentId = self::FIRST_ID;
@@ -59,8 +63,6 @@ class WindowsManager implements Listener
     private $windows = array();
     /** @var Window[] */
     private $pages = array();
-
-    private $sessions = array();
     /** @var Main */
     private $main;
 
@@ -103,6 +105,9 @@ class WindowsManager implements Listener
 		$this->add(MailboxWindow::class);
 		$this->add(MailWindow::class);
 		$this->add(ParcelWindow::class);
+		$this->add(HomesWindow::class);
+		$this->add(DeletehomeWindow::class);
+		$this->add(SethomeWindow::class);
     }
 
     public function add($window)

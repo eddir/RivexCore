@@ -51,7 +51,6 @@ class JoinFractionWindow extends BaseWindow implements Window
     public function handle(Player $player, $response)
     {
         $main = Main::getInstance();
-        $user = $main->getUser($player->getName());
         if (isset($response[0]) && !empty($response[0])) {
             if ($main->getFractions()->exists($response[0])) {
                 $main->getFractions()->addInvite($player->getName(), $response[0]);

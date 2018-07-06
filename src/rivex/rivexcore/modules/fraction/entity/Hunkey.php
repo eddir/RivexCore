@@ -29,10 +29,8 @@ use rivex\rivexcore\Main;
 class Hunkey extends Human
 {
 
-
     private $uid = 0;
     private $fraction;
-    private $skinData;
 
     public function getName(): string
     {

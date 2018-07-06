@@ -27,15 +27,11 @@ use rivex\rivexcore\Main;
 
 class WorkQueue extends Task
 {
-
-    private $enable = true;
-
+    /** @var array */
     private $works = array();
-
-    private $interval = 5;
-
+    /** @var int */
     private $current = 0;
-
+    /** @var Main */
     private $main;
 
     public function __construct(Main $main)

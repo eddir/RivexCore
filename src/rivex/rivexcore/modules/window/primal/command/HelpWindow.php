@@ -33,6 +33,7 @@ class HelpWindow extends BaseWindow implements Window
         $this->ui->addButton(new Button("§9Мой профиль"));
         $this->ui->addButton(new Button("§9Легенда"));
         $this->ui->addButton(new Button("§9Сменить сервер"));
+        $this->ui->addButton(new Button("§9Мои дома"));
         $this->ui->addButton(new Button("§9Открыть почту"));
         $this->ui->addButton(new Button("§9Доступные мне команды"));
         $this->ui->addButton(new Button("§9Связь с администрацией"));
@@ -62,12 +63,15 @@ class HelpWindow extends BaseWindow implements Window
                 Main::getInstance()->getWindows()->getByName("servers")->show($player);
                 break;
             case 3:
-                Main::getInstance()->getWindows()->getByName("mailbox")->show($player);
+                Main::getInstance()->getWindows()->getByName("homes")->show($player);
                 break;
             case 4:
-                Main::getInstance()->getWindows()->getByName("commands")->show($player);
+                Main::getInstance()->getWindows()->getByName("mailbox")->show($player);
                 break;
             case 5:
+                Main::getInstance()->getWindows()->getByName("commands")->show($player);
+                break;
+            case 6:
                 Main::getInstance()->getWindows()->getByName("contact")->show($player);
                 break;
         }

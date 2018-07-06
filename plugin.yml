@@ -55,6 +55,12 @@ permissions:
      rivex.command.spawn:
       default: true
       description: "Allows to teleport to spawn location"
+     rivex.command.home:
+      default: true
+      description: "Allows to manage own homes"
+     rivex.command.deletehome:
+      default: true
+      description: "Allows to remove self homes"
      rivex.command.help:
       default: true
       deacription: "Allows to get info from help command"
