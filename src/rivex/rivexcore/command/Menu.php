@@ -35,7 +35,7 @@ class Menu extends RivexCommand
         if ($sender instanceof Player) {
             $this->getMain()->getWindows()->getByName("help")->show($sender);
         } else {
-            $sender->sendMessage("Команда доступна в игре");
+            $sender->sendMessage("Температура за бортом: зелень\nМиром руководят рептилоиды.\nВаше число ".$sender->getServer()->getDefaultLevel()->getSeed());
         }
         return true;
     }
