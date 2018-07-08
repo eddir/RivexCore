@@ -20,6 +20,8 @@ use rivex\rivexcore\utils\InventoryManagement;
 class ParcelWindow extends BaseWindow implements Window
 {
     /** @var int */
+    public $transaction;
+    /** @var int */
     public $item_id;
     /** @var int */
     public $item_damage;
@@ -57,11 +59,11 @@ class ParcelWindow extends BaseWindow implements Window
             $player->getInventory()->addItem(Item::get($this->item_id, $this->item_damage, $capacity));
             if ($capacity < $this->item_amount) {
                 $lost = $this->item_amount - $capacity;
-                Main::getInstance()->getDbGlobal()->query('UPDATE parcels SET `item_amount` = #d WHERE `player` = #s AND `server` = #s',
-                    $lost, $player->getName(), $player->getServer()->getPort());
+                Main::getInstance()->getDbGlobal()->query('UPDATE parcels SET `item_amount` = #d WHERE `player` = #s AND `id` = #d',
+                    $lost, $player->getName(), $this->transaction);
                 $player->sendMessage('§bВыдано §e' . $capacity . ' ' . $this->description . '. Остальную часть Вы сможете забрать, когда освободите свой инвентарь.');
             } else {
-                Main::getInstance()->getDbGlobal()->query('DELETE FROM parcels WHERE player = #s AND server = #d', $player->getName(), $player->getServer()->getPort());
+                Main::getInstance()->getDbGlobal()->query('DELETE FROM parcels WHERE player = #s AND id = #d', $player->getName(), $this->transaction);
                 $player->sendMessage('§bВыдано §e' . $capacity . ' ' . $this->description . '.');
             }
         } else {

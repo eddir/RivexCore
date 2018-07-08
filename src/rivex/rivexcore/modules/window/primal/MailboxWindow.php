@@ -68,6 +68,7 @@ class MailboxWindow extends BaseWindow implements Window
             } elseif ($item[0] == 'parcel') {
                 /** @var ParcelWindow $window */
                 $window = Main::getInstance()->getWindows()->getByName('parcel');
+                $window->transaction = $item['1']['id'];
                 $window->item_id = $item['1']['item_id'];
                 $window->item_damage = $item['1']['item_damage'];
                 $window->item_amount = $item['1']['item_amount'];
