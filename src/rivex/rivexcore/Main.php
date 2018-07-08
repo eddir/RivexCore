@@ -109,7 +109,7 @@ class Main extends PluginBase
         $this->dbGlobal->createTable("parcels", array(
             "id" => "MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT",
             "player" => "VARCHAR(32) NOT NULL",
-            "item_id" => "TINYINT UNSIGNED NOT NULL",
+            "item_id" => "SMALLINT UNSIGNED NOT NULL",
             "item_damage" => "TINYINT UNSIGNED NOT NULL",
             "item_amount" => "TINYINT UNSIGNED NOT NULL",
             "description" => "VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci",
