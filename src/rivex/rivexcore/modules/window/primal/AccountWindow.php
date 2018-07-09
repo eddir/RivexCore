@@ -21,6 +21,7 @@ use pocketmine\Player;
 
 use rivex\rivexcore\Main;
 
+use rivex\rivexcore\modules\generator\space\SpaceGenerator;
 use rivex\rivexcore\modules\window\element\Label;
 use rivex\rivexcore\modules\window\type\Custom;
 use rivex\rivexcore\modules\window\Window;
@@ -43,10 +44,14 @@ class AccountWindow extends BaseWindow implements Window
     public function prepare(Player $player)
     {
         $this->ui->clean();
-        $this->ui->addElement(new Label(
-            "§2Ваш никнейм: " . $player->getName() .
-            "\nВы находитесь на сервере: " . Main::getServerName()
-        ));
+        $text = "§2Ваш никнейм: " . $player->getName() .
+            "\nВы находитесь на сервере: " . Main::getServerName();
+
+        if ($player->getLevel()->getProvider()->getGenerator() == 'space') {
+            $text .= "\nПланета: " . SpaceGenerator::getLocationAt($player->x, $player->z, $player->level)[0];
+        }
+
+        $this->ui->addElement(new Label($text));
         $this->serialize();
         return true;
     }
