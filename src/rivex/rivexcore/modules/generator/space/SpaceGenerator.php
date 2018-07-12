@@ -24,9 +24,20 @@ use pocketmine\level\generator\noise\Simplex;
 use pocketmine\level\generator\populator\Populator;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
+use pocketmine\Server;
 use pocketmine\utils\Random;
+use rivex\rivexcore\modules\generator\space\location\Earth;
+use rivex\rivexcore\modules\generator\space\location\Jupiter;
 use rivex\rivexcore\modules\generator\space\location\Location;
+use rivex\rivexcore\modules\generator\space\location\Mars;
+use rivex\rivexcore\modules\generator\space\location\Mercury;
+use rivex\rivexcore\modules\generator\space\location\Neptune;
+use rivex\rivexcore\modules\generator\space\location\Saturn;
+use rivex\rivexcore\modules\generator\space\location\Sun;
+use rivex\rivexcore\modules\generator\space\location\Uranus;
+use rivex\rivexcore\modules\generator\space\location\Venus;
 use rivex\rivexcore\modules\generator\space\populator\CavePopulator;
+use rivex\rivexcore\modules\window\primal\ServersWindow;
 
 
 class SpaceGenerator extends Generator
@@ -36,15 +47,15 @@ class SpaceGenerator extends Generator
 
     //TODO: использовать getName()
     private static $locationNames = array(
-        array('Sun', 'rivex\\rivexcore\\modules\\generator\\space\\location\\Sun'),
-        array('Earth', 'rivex\\rivexcore\\modules\\generator\\space\\location\\Earth'),
-        array('Jupiter', 'rivex\\rivexcore\\modules\\generator\\space\\location\\Jupiter'),
-        array('Mars', 'rivex\\rivexcore\\modules\\generator\\space\\location\\Mars'),
-        array('Mercury', 'rivex\\rivexcore\\modules\\generator\\space\\location\\Mercury'),
-        array('Neptune', 'rivex\\rivexcore\\modules\\generator\\space\\location\\Neptune'),
-        array('Saturn', 'rivex\\rivexcore\\modules\\generator\\space\\location\\Saturn'),
-        array('Uranus', 'rivex\\rivexcore\\modules\\generator\\space\\location\\Uranus'),
-        array('Venus', 'rivex\\rivexcore\\modules\\generator\\space\\location\\Venus')
+        Sun::class,
+        Earth::class,
+        Jupiter::class,
+        Mars::class,
+        Mercury::class,
+        Neptune::class,
+        Saturn::class,
+        Uranus::class,
+        Venus::class
     );
     private static $SMOOTH_SIZE = 2;
     /** @var Level */
@@ -105,19 +116,6 @@ class SpaceGenerator extends Generator
     }
 
     /**
-     * @param int $x
-     * @param int $z
-     * @param ChunkManager $level
-     * @return array
-     */
-    public static function getLocationAt(int $x, int $z, ChunkManager $level): array
-    {
-        return self::$locationNames[(
-            abs($level->getSeed() % 9 + floor($x / 1024) + floor($z / 1024))
-        ) % 9];
-    }
-
-    /**
      * @return array
      */
     public function getSettings(): array
@@ -162,7 +160,7 @@ class SpaceGenerator extends Generator
         $this->random->setSeed($this->level->getSeed());
 
         foreach (self::$locationNames as $name => $location) {
-            $this->locations[] = new $location[1]($this);
+            $this->locations[] = new $location($this);
         }
 
         $cave = new CavePopulator ();
@@ -206,6 +204,19 @@ class SpaceGenerator extends Generator
                 }
             }
         }*/
+    }
+
+    /**
+     * @param int $x
+     * @param int $z
+     * @param ChunkManager $level
+     * @return string
+     */
+    public static function getLocationAt(int $x, int $z, ChunkManager $level): string
+    {
+        return self::$locationNames[(
+        abs($level->getSeed() % 9 + floor($x / 1024) + floor($z / 1024))
+        ) % 9];
     }
 
     /**

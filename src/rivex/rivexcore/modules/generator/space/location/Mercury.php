@@ -17,6 +17,7 @@ namespace rivex\rivexcore\modules\generator\space\location;
  */
 
 use pocketmine\block\Block;
+
 use pocketmine\level\generator\Generator;
 use pocketmine\utils\Random;
 use rivex\rivexcore\modules\generator\space\object\OreType;
@@ -25,20 +26,23 @@ use rivex\rivexcore\modules\generator\space\SpaceGenerator;
 
 class Mercury extends Spherical implements Location
 {
+    const NAME = 'Меркурий';
+
     /** @var SpaceGenerator */
     private $generator;
 
+    // желтый
     private $baseBlock = [Block::NETHERRACK, 0];
 
     private $compoundBlocks = [
-        [Block::CONCRETEPOWDER, 1, 50,  50, 1, 100],
-        [Block::NETHERRACK,     0, 30,  60, 1, 100],
-        [Block::SOUL_SAND,      0, 20,  70, 1, 100],
-        [Block::MAGMA,          0, 25, 100, 1, 100],
-        [Block::DIAMOND_ORE,    0,  1,   7, 0, 25],
-        [Block::GOLD_ORE,       0,  9,   6, 5, 60],
-        [Block::EMERALD_ORE,    0, 10,  10, 0, 50],
-        [Block::COAL_ORE,       0,  9,  20, 1, 70]
+        [Block::CONCRETEPOWDER, 4, 50, 40, 1, 100],
+        [Block::CONCRETE, 4, 10, 50, 1, 100],
+        [Block::END_STONE, 0, 20, 40, 1, 100],
+        [Block::MAGMA, 0, 25, 50, 1, 100],
+
+        [Block::DIAMOND_ORE, 0, 3, 9, 0, 25],
+        [Block::GOLD_ORE, 0, 4, 3, 5, 80],
+        [Block::COAL_ORE, 0, 12, 20, 1, 70]
     ];
 
     private $generationPopulators = [];

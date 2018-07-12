@@ -25,6 +25,8 @@ use rivex\rivexcore\modules\generator\space\SpaceGenerator;
 
 class Sun extends Spherical implements Location
 {
+    const NAME = 'Солнце';
+
     /** @var SpaceGenerator */
     private $generator;
 
@@ -32,12 +34,12 @@ class Sun extends Spherical implements Location
 
     private $compoundBlocks = [
         [Block::CONCRETEPOWDER, 1, 50,  50, 1, 100],
-        [Block::NETHERRACK,     0, 30,  60, 1, 100],
         [Block::SOUL_SAND,      0, 20,  70, 1, 100],
-        [Block::MAGMA,          0, 25, 100, 1, 100],
+        [Block::MAGMA,          0, 25, 50, 1, 100],
+
         [Block::DIAMOND_ORE,    0,  1,   7, 0, 25],
-        [Block::GOLD_ORE,       0,  9,   6, 5, 60],
-        [Block::EMERALD_ORE,    0, 10,  10, 0, 50],
+        [Block::GOLD_ORE,       0,  4,   3, 5, 60],
+        [Block::EMERALD_ORE,    0, 4,  5, 0, 50],
         [Block::COAL_ORE,       0,  9,  20, 1, 70]
     ];
 

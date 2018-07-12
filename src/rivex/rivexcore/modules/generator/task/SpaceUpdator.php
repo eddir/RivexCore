@@ -5,11 +5,19 @@ namespace rivex\rivexcore\modules\generator\task;
 use pocketmine\entity\Effect;
 use pocketmine\entity\EffectInstance;
 
+use pocketmine\level\Level;
+use pocketmine\math\Vector3;
 use pocketmine\Player;
 use pocketmine\scheduler\Task;
 use pocketmine\Server;
 
+use rivex\rivexcore\modules\generator\space\location\Earth;
+use rivex\rivexcore\modules\generator\space\location\Mercury;
+use rivex\rivexcore\modules\generator\space\location\Neptune;
+use rivex\rivexcore\modules\generator\space\location\Sun;
+use rivex\rivexcore\modules\generator\space\location\Uranus;
 use rivex\rivexcore\modules\generator\space\SpaceGenerator;
+use rivex\rivexcore\modules\generator\space\structure\SugarCane;
 
 /**
  * Created by PhpStorm.
@@ -20,6 +28,8 @@ use rivex\rivexcore\modules\generator\space\SpaceGenerator;
 class SpaceUpdator extends Task
 {
 
+    private $first = true;
+
     /**
      * Actions to execute when run
      *
@@ -29,21 +39,21 @@ class SpaceUpdator extends Task
      */
     public function onRun(int $currentTick)
     {
+        if ($this->first) {
+            $level = Server::getInstance()->getDefaultLevel();
+            $level->stopTime();
+            $level->setTime(Level::TIME_NIGHT);
+            $this->first = false;
+        }
         foreach (Server::getInstance()->getOnlinePlayers() as $player) {
             /** @var Player $player */
-            switch (SpaceGenerator::getLocationAt($player->getFloorX(), $player->getFloorZ(), $player->getLevel())[0]) {
-               case 'Earth':
-                   $effect = new EffectInstance(Effect::getEffect(Effect::SPEED), 1500, 1);
-                   $player->addEffect($effect);
-                   break;
-               case 'Sun':
-                   $player->addEffect(new EffectInstance(Effect::getEffect(Effect::JUMP), 1500, 1));
-                   //$player->addEffect(new EffectInstance(Effect::getEffect(Effect::BLINDNESS), 1500, 0.5));
-                   break;
-               default:
-                   $player->removeAllEffects();
-                   break;
-           }
+            $planet = SpaceGenerator::getLocationAt($player->getFloorX(), $player->getFloorZ(), $player->getLevel());
+            if ($planet instanceof Neptune || $planet instanceof Uranus || $planet instanceof Mercury) {
+                $player->addEffect(new EffectInstance(Effect::getEffect(Effect::JUMP), 1500, 1));
+            } else {
+                $player->addEffect(new EffectInstance(Effect::getEffect(Effect::SPEED), 1500, 1));
+            }
+            $player->addEffect(new EffectInstance(Effect::getEffect(Effect::NIGHT_VISION), 1500, 1));
         }
     }
 }

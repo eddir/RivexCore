@@ -25,26 +25,29 @@ use rivex\rivexcore\modules\generator\space\SpaceGenerator;
 
 class Saturn extends Spherical implements Location
 {
+    const NAME = 'Сатурн';
+
     /** @var SpaceGenerator */
     private $generator;
 
-    private $baseBlock = [Block::NETHERRACK, 0];
+    // желто-белый
+    private $baseBlock = [Block::SAND, 0];
 
     private $compoundBlocks = [
-        [Block::CONCRETEPOWDER, 1, 50,  50, 1, 100],
-        [Block::NETHERRACK,     0, 30,  60, 1, 100],
-        [Block::SOUL_SAND,      0, 20,  70, 1, 100],
-        [Block::MAGMA,          0, 25, 100, 1, 100],
-        [Block::DIAMOND_ORE,    0,  1,   7, 0, 25],
-        [Block::GOLD_ORE,       0,  9,   6, 5, 60],
-        [Block::EMERALD_ORE,    0, 10,  10, 0, 50],
-        [Block::COAL_ORE,       0,  9,  20, 1, 70]
+        [Block::CONCRETEPOWDER, 0, 50,  50, 1, 100],
+        [Block::CONCRETE,       0, 50,  50, 1, 100],
+        [Block::QUARTZ_ORE, 0, 30, 50, 1, 100],
+        [Block::BONE_BLOCK, 0, 40, 10, 1, 100],
+
+        [Block::COAL_ORE, 0, 15, 35, 1, 70],
+        [Block::EMERALD_ORE, 0, 3, 5, 1, 40],
+        [Block::REDSTONE_ORE, 0, 8, 17, 1, 60]
     ];
 
     private $generationPopulators = [];
     private $populators = [];
 
-    private $luquid = [Block::LAVA, 0];
+    private $luquid = [Block::AIR, 0];
 
     public function __construct(Generator $generator)
     {

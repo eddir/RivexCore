@@ -53,6 +53,8 @@ use rivex\rivexcore\modules\generator\space\SpaceGenerator;
 
 class Earth extends Spherical implements Location
 {
+    const NAME = 'Земля';
+
     private static $biomes;
     /** @var Biome */
     public static $biomeById;

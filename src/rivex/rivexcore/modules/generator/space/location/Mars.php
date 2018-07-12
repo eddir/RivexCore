@@ -25,20 +25,23 @@ use rivex\rivexcore\modules\generator\space\SpaceGenerator;
 
 class Mars extends Spherical implements Location
 {
+    const NAME = 'Марс';
+
     /** @var SpaceGenerator */
     private $generator;
 
+    // светло красный
     private $baseBlock = [Block::NETHERRACK, 0];
 
     private $compoundBlocks = [
-        [Block::CONCRETEPOWDER, 1, 50,  50, 1, 100],
-        [Block::NETHERRACK,     0, 30,  60, 1, 100],
-        [Block::SOUL_SAND,      0, 20,  70, 1, 100],
-        [Block::MAGMA,          0, 25, 100, 1, 100],
-        [Block::DIAMOND_ORE,    0,  1,   7, 0, 25],
-        [Block::GOLD_ORE,       0,  9,   6, 5, 60],
-        [Block::EMERALD_ORE,    0, 10,  10, 0, 50],
-        [Block::COAL_ORE,       0,  9,  20, 1, 70]
+        [Block::CONCRETEPOWDER, 14, 50, 50, 1, 100],
+        [Block::SAND, 1, 20, 70, 1, 100],
+        [Block::MAGMA, 0, 25, 30, 1, 100],
+        [Block::TERRACOTTA, 14, 30, 20, 1, 100],
+
+        [Block::DIAMOND_ORE, 0, 1, 4, 0, 25],
+        [Block::GOLD_ORE, 0, 8, 5, 5, 80],
+        [Block::COAL_ORE, 0, 15, 20, 1, 70]
     ];
 
     private $generationPopulators = [];

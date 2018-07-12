@@ -25,26 +25,28 @@ use rivex\rivexcore\modules\generator\space\SpaceGenerator;
 
 class Uranus extends Spherical implements Location
 {
+    const NAME = 'Уран';
+
     /** @var SpaceGenerator */
     private $generator;
 
-    private $baseBlock = [Block::NETHERRACK, 0];
+    // голубой
+    private $baseBlock = [Block::SNOW, 0];
 
     private $compoundBlocks = [
-        [Block::CONCRETEPOWDER, 1, 50,  50, 1, 100],
-        [Block::NETHERRACK,     0, 30,  60, 1, 100],
-        [Block::SOUL_SAND,      0, 20,  70, 1, 100],
-        [Block::MAGMA,          0, 25, 100, 1, 100],
-        [Block::DIAMOND_ORE,    0,  1,   7, 0, 25],
-        [Block::GOLD_ORE,       0,  9,   6, 5, 60],
-        [Block::EMERALD_ORE,    0, 10,  10, 0, 50],
-        [Block::COAL_ORE,       0,  9,  20, 1, 70]
+        [Block::CONCRETE, 3, 40, 50, 0, 100],
+        [Block::TERRACOTTA, 3, 30, 50, 0, 100],
+        [Block::CONCRETEPOWDER, 11, 20, 50, 0, 100],
+
+        [Block::EMERALD_ORE, 0, 1, 4, 1, 40],
+        [Block::REDSTONE_ORE, 0, 14, 22, 1, 60],
+        [Block::LAPIS_ORE, 0, 2, 14, 1, 30]
     ];
 
     private $generationPopulators = [];
     private $populators = [];
 
-    private $luquid = [Block::LAVA, 0];
+    private $luquid = [Block::ICE, 0];
 
     public function __construct(Generator $generator)
     {

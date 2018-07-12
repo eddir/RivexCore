@@ -19,30 +19,38 @@ namespace rivex\rivexcore\modules\generator\space\location;
 use pocketmine\block\Block;
 
 use pocketmine\level\generator\Generator;
-use pocketmine\utils\Random;;
+use pocketmine\utils\Random;
+
+;
+
 use rivex\rivexcore\modules\generator\space\object\OreType;
 use rivex\rivexcore\modules\generator\space\populator\Ore;
 use rivex\rivexcore\modules\generator\space\SpaceGenerator;
 
 class Jupiter extends Spherical implements Location
 {
+    const NAME = 'Юпитер';
+
     /** @var SpaceGenerator */
     private $generator;
 
+    // розовый
     private $baseBlock = [Block::TERRACOTTA, 0];
 
     private $compoundBlocks = [
-        [Block::CONCRETEPOWDER, 1, 50,  50, 1, 100],
-        [Block::DIAMOND_ORE,    0,  1,   7, 0, 25],
-        [Block::GOLD_ORE,       0,  9,   6, 5, 60],
-        [Block::EMERALD_ORE,    0, 10,  10, 0, 50],
-        [Block::COAL_ORE,       0,  9,  20, 1, 70]
+        [Block::CONCRETEPOWDER, 4, 50, 50, 1, 100],
+        [Block::SAND, 0, 20, 40, 1, 100],
+        [Block::CONCRETE, 1, 10, 30, 1, 100],
+
+        [Block::GOLD_ORE, 0, 2, 5, 5, 80],
+        [Block::COAL_ORE, 0, 15, 35, 1, 70],
+        [Block::EMERALD_ORE, 0, 3, 5, 1, 40]
     ];
 
     private $generationPopulators = [];
     private $populators = [];
 
-    private $luquid = [Block::LAVA, 0];
+    private $luquid = [Block::AIR, 0];
 
     public function __construct(Generator $generator)
     {

@@ -25,20 +25,24 @@ use rivex\rivexcore\modules\generator\space\SpaceGenerator;
 
 class Venus extends Spherical implements Location
 {
+    const NAME = 'Венус';
+
     /** @var SpaceGenerator */
     private $generator;
 
+    // красный
     private $baseBlock = [Block::NETHERRACK, 0];
 
     private $compoundBlocks = [
-        [Block::CONCRETEPOWDER, 1, 50,  50, 1, 100],
-        [Block::NETHERRACK,     0, 30,  60, 1, 100],
-        [Block::SOUL_SAND,      0, 20,  70, 1, 100],
-        [Block::MAGMA,          0, 25, 100, 1, 100],
-        [Block::DIAMOND_ORE,    0,  1,   7, 0, 25],
-        [Block::GOLD_ORE,       0,  9,   6, 5, 60],
-        [Block::EMERALD_ORE,    0, 10,  10, 0, 50],
-        [Block::COAL_ORE,       0,  9,  20, 1, 70]
+        [Block::CONCRETEPOWDER, 14, 50, 50, 1, 100],
+        [Block::MAGMA, 0, 25, 20, 1, 100],
+        [Block::CONCRETE, 1, 15, 40, 1, 100],
+        [Block::TERRACOTTA, 14, 20, 40, 1, 100],
+        [Block::SOUL_SAND, 0, 30, 5, 1, 100],
+
+        [Block::DIAMOND_ORE, 0, 2, 7, 0, 25],
+        [Block::GOLD_ORE, 0, 6, 4, 5, 80],
+        [Block::COAL_ORE, 0, 14, 20, 1, 70]
     ];
 
     private $generationPopulators = [];
