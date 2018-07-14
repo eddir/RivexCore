@@ -2,9 +2,12 @@
 
 namespace rivex\rivexcore\modules\test;
 
+use pocketmine\event\level\LevelLoadEvent;
+use pocketmine\event\Listener;
+use pocketmine\utils\Config;
 use rivex\rivexcore\Main;
 
-class Test
+class Test implements Listener
 {
 
     private $main;
@@ -13,6 +16,7 @@ class Test
     public function __construct(Main $main)
     {
         $this->main = $main;
+        $main->getServer()->getPluginManager()->registerEvents($this, $main);
     }
 
     public function getMain()
@@ -22,10 +26,6 @@ class Test
 
     public function test()
     {
-        //$this->futureTest();
-        //$this->educateTest();
-		
-		//$this->getMain()->getScheduler()->scheduleDelayedTask(new TestTask($this), 20 * 90);
     }
 
     private function educateTest()
@@ -37,16 +37,33 @@ class Test
         echo 'End educate test', PHP_EOL;
     }
 
-    private function futureTest()
+    public function futureTest(LevelLoadEvent $event)
     {
-        var_dump("Begin 5");
-        $this->getMain()->getWorkQueue()->addWork(
-            function ($text) {
-                var_dump("Work Queue: $text", $this->test);
-            },
-            5,
-            ["5 seconds comes"]
-        );
+        $maxX = 0;
+        $maxZ = 0;
+        $minX = 0;
+        $minZ = 0;
+        $level = $event->getLevel();
+        $config = (new Config($this->getMain()->getServer()->getDataPath() . 'plugin_data/SexGuard/region.json', Config::JSON))->getAll();
+        foreach ($config as $region) {
+            if ($region['min']['x'] >> 4 < $minX) $minX = $region['min']['x'] >> 4;
+            if ($region['min']['z'] >> 4 < $minZ) $minZ = $region['min']['z'] >> 4;
+            if ($region['max']['x'] >> 4 > $maxX) $maxX = $region['max']['x'] >> 4;
+            if ($region['max']['z'] >> 4 > $maxZ) $maxZ = $region['max']['z'] >> 4;
+        }
+        for ($x = $minX - 16; $x < $maxX + 16; $x++) {
+            for ($z = $minZ - 16; $z < $maxZ + 16; $z++) {
+                foreach ($config as $region) {
+                    if (($region['min']['x'] >> 4) <= $x && ($region['max']['x'] >> 4) >= $x) {
+                        if (($region['min']['z'] >> 4) <= $z && ($region['max']['z'] >> 4) >= $z) {
+                            continue 2;
+                        }
+                    }
+                }
+                $level->loadChunk($x, $z);
+                $level->getChunk($x, $z)->setGenerated(false);
+            }
+        }
         return true;
     }
 
