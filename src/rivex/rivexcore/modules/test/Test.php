@@ -16,7 +16,7 @@ class Test implements Listener
     public function __construct(Main $main)
     {
         $this->main = $main;
-        $main->getServer()->getPluginManager()->registerEvents($this, $main);
+        //$main->getServer()->getPluginManager()->registerEvents($this, $main);
     }
 
     public function getMain()
@@ -37,7 +37,7 @@ class Test implements Listener
         echo 'End educate test', PHP_EOL;
     }
 
-    public function futureTest(LevelLoadEvent $event)
+    private function futureTest(LevelLoadEvent $event)
     {
         $maxX = 0;
         $maxZ = 0;
