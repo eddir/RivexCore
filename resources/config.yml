@@ -1,5 +1,5 @@
 # Чтож, пришло время делать конфиги!1!!
-"version": 3
+"version": 4
 
 # Защита карты от вандалов
 protect-world: false
@@ -10,8 +10,21 @@ protect-world: false
  "x": 0
  "z": 0
 
-# точка спавна во всех мирах. Если нуль, то она не изменится.
+# Точка спавна во всех мирах. Если нуль, то она не изменится.
 "spawn-point":
  "x": null
  "y": null
  "z": null
+
+# Адреса серверов для телепортации к ним
+servers:
+ -
+  ip: "rivex.online"
+  port: 19132
+  name: "Hub"
+  transfer: false
+ -
+  ip: "rivex.online"
+  port: 19131
+  name: "Survival"
+  transfer: true
