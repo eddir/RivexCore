@@ -66,20 +66,21 @@ class Hunkey extends Human
         }
     }
 
-    protected function initEntity(): void
+    protected function initEntity(CompoundTag $nbt): void
     {
         $this->setMaxHealth(500);
         parent::initEntity();
         $this->fraction = $this->namedtag->getString("fraction", null);
     }
 
-    public function saveNBT(): void
+    public function saveNBT(): CompoundTag
     {
-        parent::saveNBT();
+	$nbt = parent::saveNBT();
         $visibility = 2;
         $scale = $this->getDataPropertyManager()->getFloat(Entity::DATA_SCALE);
-        $this->namedtag->setInt("NameVisibility", $visibility, true);
-        $this->namedtag->setFloat("Scale", $scale, true);
+        $nbt->setInt("NameVisibility", $visibility, true);
+	$nbt->setFloat("Scale", $scale, true);
+	return $nbt;
     }
 
     protected function sendSpawnPacket(Player $player): void

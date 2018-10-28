@@ -70,7 +70,7 @@ class SpaceGenerator extends Generator
 
     // Хрен его знает что это, но без него не работает. Так ещё и псевдоконстанта.
     private $noiseBase;
-    private $options;
+    protected $options;
 
     /**
      * SpaceGenerator constructor.
