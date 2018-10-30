@@ -47,10 +47,9 @@ class AccountWindow extends BaseWindow implements Window
         $text = "§2Ваш никнейм: " . $player->getName() .
             "\nВы находитесь на сервере: " . Main::getServerName();
 
-        if ($player->getLevel()->getProvider()->getGenerator() == 'space') {
-            $text .= "\nПланета: " . constant(SpaceGenerator::getLocationAt($player->x, $player->z, $player->level).'::NAME');
-        }
-
+        
+        $text .= "\nПланета: " . constant(SpaceGenerator::getLocationAt($player->x, $player->z, $player->level).'::NAME');
+        
         $this->ui->addElement(new Label($text));
         $this->serialize();
         return true;
