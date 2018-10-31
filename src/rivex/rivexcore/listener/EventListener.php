@@ -195,8 +195,8 @@ class EventListener implements Listener
                     if ($user->getRank() != FractionManager::INDEPENDENT && $this->getMain()->getUser($entity->getName())->getFraction() == $user->getFraction()) {
                         $event->setCancelled();
                     }
-                } elseif ($entity->namedtag->hasTag('fraction')) {
-                    $fraction = $entity->namedtag->getString('fraction');
+                } elseif ($entity->getDataPropertyManager()->hasProperty('rivex_core_fraction')) {
+                    $fraction = $entity->getDataPropertyManager()->getString('rivex_core_fraction');
                     if ($user->getFraction() == $fraction) {
                         $event->setCancelled();
                         $this->getMain()->getWindows()->getByName('generatormenufraction')->show($damager);
