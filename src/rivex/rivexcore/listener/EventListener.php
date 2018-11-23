@@ -104,8 +104,8 @@ class EventListener implements Listener
     */
     public function onLogin(PlayerLoginEvent $event)
     {
-        //if ($event->getPlayer()->getLevel()->getName()
         $this->getMain()->addUser($event->getPlayer());
+
 
         //file_put_contents('./skin.bin', $event->getPlayer()->getSkin()->getSkinData());
     }
@@ -195,7 +195,7 @@ class EventListener implements Listener
                     if ($user->getRank() != FractionManager::INDEPENDENT && $this->getMain()->getUser($entity->getName())->getFraction() == $user->getFraction()) {
                         $event->setCancelled();
                     }
-                } elseif ($entity->getDataPropertyManager()->hasProperty('rivex_core_fraction')) {
+                }/* elseif ($entity->getDataPropertyManager()->hasProperty('rivex_core_fraction')) {
                     $fraction = $entity->getDataPropertyManager()->getString('rivex_core_fraction');
                     if ($user->getFraction() == $fraction) {
                         $event->setCancelled();
@@ -204,7 +204,7 @@ class EventListener implements Listener
                         $damager->getLevel()->addParticle(new DestroyBlockParticle($entity->add(0, 2), Block::get(Block::REDSTONE_BLOCK)));
                         $damager->sendPopup('§aЗдоровье: §c' . $entity->getHealth() . '/' . $entity->getMaxHealth());
                     }
-                }
+                }*/
             }
         }
     }
