@@ -124,7 +124,7 @@ class Main extends PluginBase
             "z" => "SMALLINT NOT NULL",
         ));
 
-        $this->fractions = new FractionManager($this);
+#        $this->fractions = new FractionManager($this);
         $this->windows = new WindowsManager($this);
         $this->events = new CallbackListener($this);
 
