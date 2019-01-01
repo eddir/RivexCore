@@ -4,7 +4,7 @@ namespace rivex\rivexcore\modules\window\network;
 
 #include <rules/DataPacket.h>
 
-use pocketmine\network\mcpe\handler\SessionHandler;
+use pocketmine\network\mcpe\NetworkSession;
 use pocketmine\network\mcpe\protocol\DataPacket;
 
 class ModalFormRequestPacket extends DataPacket
@@ -29,7 +29,7 @@ class ModalFormRequestPacket extends DataPacket
         $this->putString($this->formData);
     }
 
-    public function handle(SessionHandler $session): bool
+    public function handle(NetworkSession $session): bool
     {
         return true;
     }
