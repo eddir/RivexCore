@@ -24,7 +24,6 @@ use rivex\rivexcore\modules\generator\space\SpaceGenerator;
 class Generator
 {
 
-    const ENABLE = true;
     private $main;
 
     private static $generators = array(
@@ -34,8 +33,7 @@ class Generator
     public function __construct(Main $main)
     {
         $this->main = $main;
-        // TODO: настройка включения генератора
-        if (self::ENABLE) {
+        if ($this->main->getServer()->getLevelType() == "space") {
             GeneratorManager::addGenerator($this->getGenerator("space"), "space");
             $this->getMain()->getScheduler()->scheduleDelayedRepeatingTask(new SpaceUpdator(), 20 * 60, 20 * 30);
         }
