@@ -16,7 +16,6 @@ namespace rivex\rivexcore\listener;
  * January 2018
  */
 
-
 use pocketmine\block\Block;
 use pocketmine\block\ItemFrame;
 use pocketmine\entity\Entity;
@@ -39,8 +38,8 @@ use pocketmine\level\particle\DestroyBlockParticle;
 use pocketmine\level\sound\GhastSound;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
-use rivex\rivexcore\Main;
 
+use rivex\rivexcore\Main;
 use rivex\rivexcore\modules\fraction\entity\Hunkey;
 use rivex\rivexcore\modules\fraction\FractionManager;
 use rivex\rivexcore\User;
@@ -112,8 +111,11 @@ class EventListener implements Listener
 
     public function onQuit(PlayerQuitEvent $event)
     {
-        $this->getMain()->removeUser($event->getPlayer());
-        return true;
+	$this->getMain()->removeUser($event->getPlayer());
+
+	if ($this->getMain()->getConfig('alwaysOnSpawn', false)) {
+		$event->getPlayer()->teleport($event->getPlayer()->getLevel()->getSpawnLocation());
+	}
     }
 
     public function onDeath(PlayerDeathEvent $event)
