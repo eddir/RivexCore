@@ -23,6 +23,7 @@ use pocketmine\plugin\PluginBase;
 use pocketmine\event\EventPriority;
 use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\Server;
+use pocketmine\network\mcpe\protocol\TransferPacket;
 
 use rivex\DataBase\Connection;
 
@@ -150,7 +151,10 @@ class Main extends PluginBase
 			$vector = new Vector3($server['portal']['x'], $server['portal']['y'], $server['portal']['z']);
 			$this->getServer()->getPluginManager()->registerEvent(PlayerMoveEvent::class, function ($event) use ($vector, $server) {
 				if ($event->getPlayer()->distance($vector) < $server['portal']['radius']) {
-					$event->getPlayer()->transfer($server['ip'], $server['port']);
+					$pk = new TransferPacket();
+					$pk->address = $server['ip'];
+					$pk->port = $server['port'];
+					$event->getPlayer()->dataPacket($pk);
 				}
 			}, EventPriority::NORMAL, $this);
 		}
