@@ -16,13 +16,14 @@ namespace rivex\rivexcore;
  * January 2018
  */
 
-
 use pocketmine\math\Vector2;
+use pocketmine\math\Vector3;
 use pocketmine\Player;
-
 use pocketmine\plugin\PluginBase;
-
+use pocketmine\event\EventPriority;
+use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\Server;
+
 use rivex\DataBase\Connection;
 
 use rivex\rivexcore\command\AnswerReport;
@@ -142,7 +143,18 @@ class Main extends PluginBase
             $this->getScheduler()->scheduleRepeatingTask(new TerritoryLimitTask(
                 new Vector2($world_limit['x'], $world_limit['z']), $world_limit['radius']
             ), 60);
-        }
+	}
+
+	foreach ($this->getConfig()->get('servers', []) as $server) {
+		if ($server['portal']) {
+			$vector = new Vector3($server['portal']['x'], $server['portal']['y'], $server['portal']['z']);
+			$this->getServer()->getPluginManager()->registerEvent(PlayerMoveEvent::class, function ($event) use ($vector, $server) {
+				if ($event->getPlayer()->distance($vector) < $server['portal']['radius']) {
+					$event->getPlayer()->transfer($server['ip'], $server['port']);
+				}
+			}, EventPriority::NORMAL, $this);
+		}
+	}
 
         if ($this->getConfig()->get('protect-world', false)) {
             $this->getServer()->getPluginManager()->registerEvents(new WorldProtection($this), $this);

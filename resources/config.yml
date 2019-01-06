@@ -1,5 +1,5 @@
 # Чтож, пришло время делать конфиги!1!!
-"version": 4
+"version": 5
 
 # Защита карты от вандалов
 protect-world: false
@@ -16,6 +16,9 @@ protect-world: false
  "y": null
  "z": null
 
+# Телепортировать на спавн при выходе?
+"alwaysOnSpawn": false
+
 # Адреса серверов для телепортации к ним
 servers:
  -
@@ -23,8 +26,14 @@ servers:
   port: 19132
   name: "Hub"
   transfer: false
+  portal: false
  -
   ip: "rivex.online"
   port: 19131
   name: "Survival"
   transfer: true
+  portal:
+   "x": 0
+   "y": 0
+   "z": 0
+   "radius": 4
