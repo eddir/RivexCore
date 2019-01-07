@@ -19,7 +19,7 @@ class Help extends OverrideCommand
     public function __construct(Main $main)
     {
         parent::__construct($main, "help", "Get some information about commands", "/help",
-            "help", ["h", "help"]);
+            "help", ["h", "?"]);
         $this->setPermission("rivex.command.help");
     }
 
