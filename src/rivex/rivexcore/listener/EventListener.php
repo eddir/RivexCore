@@ -113,7 +113,7 @@ class EventListener implements Listener
     {
 	$this->getMain()->removeUser($event->getPlayer());
 
-	if ($this->getMain()->getConfig('alwaysOnSpawn', false)) {
+	if ($this->getMain()->getConfig()->get('alwaysOnSpawn', false)) {
 		$event->getPlayer()->teleport($event->getPlayer()->getLevel()->getSpawnLocation());
 	}
     }
