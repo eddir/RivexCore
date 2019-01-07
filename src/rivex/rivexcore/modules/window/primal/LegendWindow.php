@@ -32,7 +32,7 @@ class LegendWindow extends BaseWindow implements Window
     public function __construct($id)
     {
         $this->ui = new Custom("О сервере");
-        $this->ui->addElement(new Label("Добро пожаловать в проект игровых серверов Rivex Space Edition.\n\nМы создали уникальную вселенную прямо в игре, состоящую из многочисленных планет солнечной системы. Вы можете выбрать подходящую планету для Вашей постройки или отправиться в путешествие по галактике."));
+        $this->ui->addElement(new Label("Добро пожаловать!\nРады тебя видеть на наших серверах! Используй вкладку 'Сменить сервер' для дальнейшей игры."));
         parent::__construct($id, 'legend');
     }
 
