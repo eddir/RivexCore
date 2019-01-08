@@ -273,7 +273,7 @@ class Main extends PluginBase
         $this->users[$player->getLowerCaseName()] = new User($player, $this);
     }
 
-    public function RemoveUser(Player $player)
+    public function removeUser(Player $player)
     {
         if (isset($this->users[$player->getLowerCaseName()])) {
             unset($this->users[$player->getLowerCaseName()]);
