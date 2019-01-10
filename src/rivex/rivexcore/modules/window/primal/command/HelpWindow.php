@@ -29,7 +29,8 @@ class HelpWindow extends BaseWindow implements Window
 
     public function __construct($id)
     {
-        $this->ui = new Menu("§9Выберите пункт меню");
+	$this->ui = new Menu("§9Выберите пункт меню");
+	$this->ui->addButton(new Button("§9Магазин"));
         $this->ui->addButton(new Button("§9Мой профиль"));
         $this->ui->addButton(new Button("§9Легенда"));
         $this->ui->addButton(new Button("§9Сменить сервер"));
@@ -53,25 +54,28 @@ class HelpWindow extends BaseWindow implements Window
     public function handle(Player $player, $response)
     {
         switch ($response) {
-            case 0:
+	    case 0:
+		Main::getInstance()->getServer()->getPluginManager()->getPlugin('RShopSE')->forms->mainShopForm($player);
+		break;
+	    case 1:
                 Main::getInstance()->getWindows()->getByName("account")->show($player);
                 break;
-            case 1:
+            case 2:
                 Main::getInstance()->getWindows()->getByName("legend")->show($player);
                 break;
-            case 2:
+            case 3:
                 Main::getInstance()->getWindows()->getByName("servers")->show($player);
                 break;
-            case 3:
+            case 4:
                 Main::getInstance()->getWindows()->getByName("homes")->show($player);
                 break;
-            case 4:
+            case 5:
                 Main::getInstance()->getWindows()->getByName("mailbox")->show($player);
                 break;
-            case 5:
+            case 6:
                 Main::getInstance()->getWindows()->getByName("commands")->show($player);
                 break;
-            case 6:
+            case 7:
                 Main::getInstance()->getWindows()->getByName("contact")->show($player);
                 break;
         }
