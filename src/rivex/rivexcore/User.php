@@ -7,7 +7,6 @@ use pocketmine\Player;
 
 use rivex\rivexcore\modules\window\primal\command\ReportWindow;
 
-
 class User
 {
     /** @var Main */
@@ -35,7 +34,11 @@ class User
     {
         $this->player = $player;
         $this->main = $main;
-        if ($this->getMain()->getDbLocal()->exists('SELECT * FROM `users` WHERE `users`.`name` = #s', $this->getPlayer()->getLowerCaseName())) {
+    }
+	
+	public function load()
+	{
+		if ($this->getMain()->getDbLocal()->exists('SELECT * FROM `users` WHERE `users`.`name` = #s', $this->getPlayer()->getLowerCaseName())) {
             $description = $this->getMain()->getDbLocal()->fetch_one('SELECT * FROM `users` WHERE `name` = #s', $this->getPlayer()->getLowerCaseName());
             $this->fraction = $description['fraction'];
             $this->deaths = $description['deaths'];
@@ -44,7 +47,7 @@ class User
         } else {
             $this->getMain()->getDbLocal()->query('INSERT INTO `users` (`name`) VALUES(#s)', $this->getPlayer()->getLowerCaseName());
         }
-    }
+	}
 
     public function getHomes(): array
     {

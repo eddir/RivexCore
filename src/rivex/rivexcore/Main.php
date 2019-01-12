@@ -265,20 +265,19 @@ class Main extends PluginBase
         return isset($this->users[$name]) ? $this->users[$name] : null;
     }
 
-    public function addUser(Player $player)
+    public function addUser(Player $player): void
     {
-        if (isset($this->users[$player->getLowerCaseName()])) {
-            throw new LogicException("Player " . $player->getLowerCaseName() . " is already registered.");
-        }
-        $this->users[$player->getLowerCaseName()] = new User($player, $this);
+		$username = $player->getLowerCaseName();
+        if (!isset($this->users[$username])) {
+            $this->users[$username] = new User($player, $this);
+		}
+		$this->users[$username]->load();
     }
 
-    public function removeUser(Player $player)
+    public function removeUser(Player $player): void
     {
-        if (isset($this->users[$player->getLowerCaseName()])) {
+		if (isset($this->users[$player->getLowerCaseName()])) {
             unset($this->users[$player->getLowerCaseName()]);
-        } else {
-            throw new LogicException("Player " . $player->getLowerCaseName() . " is not valid.");//TODO!!! zzzz
         }
     }
 
