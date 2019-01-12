@@ -30,14 +30,14 @@ class User
      * @param Player $player
      * @param Main $main
      */
-    public function __construct(Player $player, Main $main)
+    public function __construct(Main $main)
     {
-        $this->player = $player;
         $this->main = $main;
     }
 	
-	public function load()
+	public function load(Player $player)
 	{
+		$this->player = $player;
 		if ($this->getMain()->getDbLocal()->exists('SELECT * FROM `users` WHERE `users`.`name` = #s', $this->getPlayer()->getLowerCaseName())) {
             $description = $this->getMain()->getDbLocal()->fetch_one('SELECT * FROM `users` WHERE `name` = #s', $this->getPlayer()->getLowerCaseName());
             $this->fraction = $description['fraction'];
