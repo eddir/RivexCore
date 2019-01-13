@@ -30,14 +30,10 @@ class User
      * @param Player $player
      * @param Main $main
      */
-    public function __construct(Main $main)
+    public function __construct(Player $player, Main $main)
     {
         $this->main = $main;
-    }
-	
-	public function load(Player $player)
-	{
-		$this->player = $player;
+        $this->player = $player;
 		if ($this->getMain()->getDbLocal()->exists('SELECT * FROM `users` WHERE `users`.`name` = #s', $this->getPlayer()->getLowerCaseName())) {
             $description = $this->getMain()->getDbLocal()->fetch_one('SELECT * FROM `users` WHERE `name` = #s', $this->getPlayer()->getLowerCaseName());
             $this->fraction = $description['fraction'];
@@ -47,8 +43,8 @@ class User
         } else {
             $this->getMain()->getDbLocal()->query('INSERT INTO `users` (`name`) VALUES(#s)', $this->getPlayer()->getLowerCaseName());
         }
-	}
-
+    }
+	
     public function getHomes(): array
     {
         return $this->getMain()->getDbLocal()->fetch_array('SELECT * FROM homes WHERE player = #s', $this->player->getName());

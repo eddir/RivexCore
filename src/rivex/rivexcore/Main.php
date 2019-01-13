@@ -267,11 +267,8 @@ class Main extends PluginBase
 
     public function addUser(Player $player): void
     {
-		$username = $player->getLowerCaseName();
-        if (!isset($this->users[$username])) {
-            $this->users[$username] = new User($this);
-		}
-		$this->users[$username]->load($player);
+        $this->removeUser($player);
+        $this->users[$player->getLowerCaseName()] = new User($player, $this);
     }
 
     public function removeUser(Player $player): void
