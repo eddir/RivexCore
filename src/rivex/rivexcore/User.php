@@ -22,8 +22,7 @@ class User
     /** @var int */
     private $rank = 0;
 
-    //TODO or not to-do?
-    private $lastlogin, $firstlogin;
+    private $lastLogin;
 
     /**
      * User constructor.
@@ -42,7 +41,18 @@ class User
             $this->rank = $description['rank'];
         } else {
             $this->getMain()->getDbLocal()->query('INSERT INTO `users` (`name`) VALUES(#s)', $this->getPlayer()->getLowerCaseName());
-        }
+	}
+	$this->lastLogin = time();
+    }
+
+    public function onLeave()
+    {
+	if ($this->getMain()->getConfig()->get('time-fee', false)) {
+	   $x = time() - $this->lastLogin;
+	   $amount = round($x^2*0.0001);
+	   $this->getMain()->economy->addMoney($this->player, $amount);
+	   var_dump($amount);
+       }
     }
 	
     public function getHomes(): array

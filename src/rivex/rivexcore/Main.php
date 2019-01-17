@@ -53,7 +53,7 @@ class Main extends PluginBase
 
     const TEST = true;
 
-    const CONFIG_VERSION = 1;
+    const CONFIG_VERSION = 6;
 
     private static $instance;
     /** @var Connection */
@@ -129,6 +129,7 @@ class Main extends PluginBase
 #        $this->fractions = new FractionManager($this);
         $this->windows = new WindowsManager($this);
         $this->events = new CallbackListener($this);
+        $this->economy = $this->getServer()->getPluginManager()->getPlugin('EconomyAPI');
 
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
         $this->getServer()->getPluginManager()->registerEvents($this->windows, $this);
@@ -273,7 +274,8 @@ class Main extends PluginBase
 
     public function removeUser(Player $player): void
     {
-		if (isset($this->users[$player->getLowerCaseName()])) {
+	    if (isset($this->users[$player->getLowerCaseName()])) {
+            $this->users[$player->getLowerCaseName()]->onLeave();
             unset($this->users[$player->getLowerCaseName()]);
         }
     }
