@@ -21,6 +21,7 @@ use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerBucketEmptyEvent;
 use pocketmine\event\player\PlayerBucketFillEvent;
 use pocketmine\event\player\PlayerInteractEvent;
+use pocketmine\event\player\PlayerExhaustEvent;
 use pocketmine\event\server\DataPacketReceiveEvent;
 use pocketmine\network\mcpe\protocol\ItemFrameDropItemPacket;
 use pocketmine\Player;
@@ -121,5 +122,9 @@ class WorldProtection implements Listener
         $event->setCancelled();
     }
 
+    public function onHunger(PlayerExhaustEvent $event)
+    {
+        $event->setCancelled();
+    }
 
 }
