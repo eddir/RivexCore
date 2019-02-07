@@ -74,6 +74,9 @@ permissions:
      rivex.command.ekill:
       description: "Allows to permanetly kill entity"
       default: op
+     rivex.command.fly:
+      description: "Allows to use fly mode"
+      default: false
      rivex.command.give:
       default: false
       description: "Allows to give items by command"
@@ -93,5 +96,15 @@ permissions:
       description: "Allows to use alliance commands"
       children:
        rivex.action.fraction.create:
-       default: op
-       description: "Allows to create alliance"
+        default: op
+        description: "Allows to create alliance"
+   rivex.vip:
+    default: false
+    description: "Vip privilages"
+    children:
+     rivex.vip.slot:
+      default: op
+      description: "Entry on full server"
+
+
+
