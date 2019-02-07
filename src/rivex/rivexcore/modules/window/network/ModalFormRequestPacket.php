@@ -5,9 +5,10 @@ namespace rivex\rivexcore\modules\window\network;
 #include <rules/DataPacket.h>
 
 use pocketmine\network\mcpe\handler\SessionHandler;
+use pocketmine\network\mcpe\protocol\ClientboundPacket;
 use pocketmine\network\mcpe\protocol\DataPacket;
 
-class ModalFormRequestPacket extends DataPacket
+class ModalFormRequestPacket extends DataPacket implements ClientboundPacket
 {
 
     const NETWORK_ID = ProtocolInfo::MODAL_FORM_REQUEST_PACKET;

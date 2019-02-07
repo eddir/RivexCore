@@ -51,7 +51,6 @@ class User
 	   $x = time() - $this->lastLogin;
 	   $amount = round($x^2*0.0001);
 	   $this->getMain()->economy->addMoney($this->player, $amount);
-	   var_dump($amount);
        }
     }
 	

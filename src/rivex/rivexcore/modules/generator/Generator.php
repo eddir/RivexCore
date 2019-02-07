@@ -33,7 +33,7 @@ class Generator
     public function __construct(Main $main)
     {
         $this->main = $main;
-        if ($this->main->getServer()->getConfigString("level-type", "DEFAULT") == "space") {
+        if ($this->main->getServer()->getConfigString('level-type') == "space") {
             GeneratorManager::addGenerator($this->getGenerator("space"), "space");
             $this->getMain()->getScheduler()->scheduleDelayedRepeatingTask(new SpaceUpdator(), 20 * 60, 20 * 30);
         }
