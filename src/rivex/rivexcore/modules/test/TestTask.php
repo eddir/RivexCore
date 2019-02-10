@@ -38,7 +38,7 @@ class TestTask extends Task
     {
 		$t1 = microtime(true);
 		$server = $this->getMain()->getServer();
-    	$level = $server->getDefaultLevel();
+    	$level = $server->getLevelManager()->getDefaultLevel();
 		echo 'Очищаю', PHP_EOL;
 		/*
     	for ($x = 0; $x <= 1024; $x++) {

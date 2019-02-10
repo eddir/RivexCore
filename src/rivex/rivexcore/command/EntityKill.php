@@ -49,7 +49,7 @@ class EntityKill extends RivexCommand
             $sender->sendMessage("§aУдарьте моба для его исчезновения.");
         } else {
             if (isset($args[0])) {
-                $entity = $this->getMain()->getServer()->getDefaultLevel()->getEntity($args[0]);
+                $entity = $this->getMain()->getServer()->getLevelManager()->getDefaultLevel()->getEntity($args[0]);
                 if ($entity !== null) {
                     $entity->kill();
                     $sender->sendMessage("Моб убит");

@@ -2,8 +2,8 @@
 
 namespace rivex\rivexcore\modules\generator\task;
 
-use pocketmine\entity\Effect;
-use pocketmine\entity\EffectInstance;
+use pocketmine\entity\effect\Effect;
+use pocketmine\entity\effect\EffectInstance;
 
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
@@ -40,7 +40,7 @@ class SpaceUpdator extends Task
     public function onRun(int $currentTick)
     {
         if ($this->first) {
-            $level = Server::getInstance()->getDefaultLevel();
+            $level = Server::getInstance()->getLevelManager()->getDefaultLevel();
             $level->stopTime();
             $level->setTime(Level::TIME_NIGHT);
             $this->first = false;

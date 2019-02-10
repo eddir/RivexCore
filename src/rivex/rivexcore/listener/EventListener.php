@@ -38,6 +38,7 @@ use pocketmine\level\particle\DestroyBlockParticle;
 use pocketmine\level\sound\GhastSound;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
+use pocketmine\GameMode;
 
 use rivex\rivexcore\Main;
 use rivex\rivexcore\modules\fraction\entity\Hunkey;
@@ -181,7 +182,7 @@ class EventListener implements Listener
                 $player->getInventory()->remove($event->getItem());
                 $player->sendMessage('§eГотово! Тапните по жителю для открытия меню');
             }
-        } elseif ($event->getBlock() instanceof ItemFrame && $event->getPlayer()->getGameMode() != Player::SURVIVAL) {
+        } elseif ($event->getBlock() instanceof ItemFrame && $event->getPlayer()->getGameMode() != GameMode::SURVIVAL) {
             $event->setCancelled();
         }
     }
@@ -226,7 +227,7 @@ class EventListener implements Listener
 
     public function onInventoryTransaction(InventoryTransactionEvent $event)
     {
-        if ($event->getTransaction()->getSource()->getGamemode() != Player::SURVIVAL) {
+        if ($event->getTransaction()->getSource()->getGamemode() != GameMode::SURVIVAL) {
             foreach ($event->getTransaction()->getInventories() as $inventory) {
                 if (!($inventory instanceof PlayerInventory or $inventory instanceof PlayerCursorInventory)) {
                     $event->setCancelled();
