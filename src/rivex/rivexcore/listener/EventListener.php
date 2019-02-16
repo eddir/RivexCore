@@ -119,7 +119,7 @@ class EventListener implements Listener
                 }
             }
         }
-    }&
+    }
 
     public function onUse(PlayerInteractEvent $event)
     {
