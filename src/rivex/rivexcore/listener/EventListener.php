@@ -31,6 +31,7 @@ use pocketmine\event\player\PlayerGameModeChangeEvent;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerLoginEvent;
 use pocketmine\event\player\PlayerQuitEvent;
+use pocketmine\event\player\PlayerDropItemEvent;
 use pocketmine\inventory\PlayerCursorInventory;
 use pocketmine\inventory\PlayerInventory;
 use pocketmine\item\Item;
@@ -57,51 +58,7 @@ class EventListener implements Listener
     {
         $this->main = $main;
     }
-    /**
-     * @param  $event
-     */
-    /*
-    public function onRegister(PlayerRegisterEvent $event)
-    {
-
-         * $this->getMain()->getWindows()->getByName('help')->show($event->getPlayer());
-         *
-         * return true;*/
-    /**
-     * $form = new HelpForm($event->getPlayer());
-     *
-     * $form = $this->getMain()->getFormAPI()->createSimpleForm(function (Player $player, array $data) {
-     * return true;
-     * });
-     * $form->setTitle("Добро пожаловать!\nЗдесь текст про то, какой у нас §eклассный §fсервер\n\nЭто окно можно открыть командой /help.");
-     * $form->addButton('Тест', 1, 'http://rostkov.pro/img.png');
-     * $form->addButton('Легенда');
-     * $form->addButton('Правила');
-     * $form->addButton('Команды');
-     * $form->addButton('Помощь');
-     * $form->sendToPlayer($event->getPlayer());
-     * }
-     * @param PlayerLoginEvent $event
-     */
-    /*
-        public function onAuthenticate(PlayerAuthenticateEvent $event)
-        {
-            $answer = $this->getMain()->getDbGlobal()->fetch_one('SELECT `id` FROM `tickets` WHERE `isread` = 0 AND `admin` = 1 AND `parent` IN (SELECT `id` FROM `tickets` WHERE `user` = #s AND `admin` = 0) LIMIT 1', $event->getPlayer()->getLowerCaseName());
-            if ($answer) {
-                $this->getMain()->getWorkQueue()->addWork(
-                    function ($username, $id) {
-                        if (($user = $this->getMain()->getUser($username))) {
-                            $user->sendAnswer($id);
-                            $this->getMain()->getDbGlobal()->query('UPDATE `tickets` SET `isread` = 1 WHERE `id` = #d', $id);
-                        }
-                    },
-                    5,
-                    [$event->getPlayer()->getName(), $answer['id']]
-                );
-            }
-            return true;
-        }
-    */
+ 
     public function onLogin(PlayerLoginEvent $event)
     {
         $this->getMain()->addUser($event->getPlayer());
@@ -244,6 +201,13 @@ class EventListener implements Listener
 			$event->getLevel()->setSpawnLocation(new Vector3($point['x'], $point['y'], $point['z']));
 		}
 	}
+
+    public function onThrow(PlayerDropItemEvent $event)
+    {
+        if ($event->getPlayer()->getGamemode() == GameMode::CREATIVE) {
+            $event->setCancelled();
+        }
+    }
 
     /**
      * @return Main
