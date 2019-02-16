@@ -110,7 +110,7 @@ class EventListener implements Listener
                 $items[] = Item::get(Item::COBBLESTONE, 0, $drops['cobblestone']);
             }
             $event->setDrops($items);
-            $this->getMain()->getFractions()->removeGenerator($entity->getFraction());
+            #$this->getMain()->getFractions()->removeGenerator($entity->getFraction());
             $event->getEntity()->getLevel()->addSound(new GhastSound($event->getEntity()));
             foreach ($this->getMain()->getUsers() as $user) {
                 /** @var $user User */
@@ -119,10 +119,12 @@ class EventListener implements Listener
                 }
             }
         }
-    }
+    }&
 
     public function onUse(PlayerInteractEvent $event)
     {
+
+/**
         if ($event->getItem()->getId() == Item::SPAWN_EGG && $event->getItem()->getDamage() == Entity::VILLAGER) {
             if (($user = $this->getMain()->getFractions()->getSession($event->getPlayer()->getName()))) {
                 $event->setCancelled();
@@ -139,7 +141,9 @@ class EventListener implements Listener
                 $player->getInventory()->remove($event->getItem());
                 $player->sendMessage('§eГотово! Тапните по жителю для открытия меню');
             }
-        } elseif ($event->getBlock() instanceof ItemFrame && $event->getPlayer()->getGameMode() != GameMode::SURVIVAL) {
+        } else
+*/
+        if ($event->getBlock() instanceof ItemFrame && $event->getPlayer()->getGameMode() != GameMode::SURVIVAL) {
             $event->setCancelled();
         }
     }
