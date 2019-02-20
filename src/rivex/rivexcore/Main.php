@@ -45,6 +45,7 @@ use rivex\rivexcore\modules\fraction\FractionManager;
 use rivex\rivexcore\modules\generator\Generator;
 use rivex\rivexcore\modules\generator\task\TerritoryLimitTask;
 use rivex\rivexcore\modules\test\Test;
+use rivex\rivexcore\modules\stat\SendUsageTask;
 use rivex\rivexcore\modules\window\WindowsManager;
 use rivex\rivexcore\utils\exception\LogicException;
 use rivex\rivexcore\utils\WorkQueue;
@@ -164,6 +165,11 @@ class Main extends PluginBase
 
         if ($this->getConfig()->get('protect-world', false)) {
             $this->getServer()->getPluginManager()->registerEvents(new WorldProtection($this), $this);
+        }
+
+        if (($period = $this->getConfig()->get('send-usage-period'))) {
+            $period *= 60 * 20;
+            $this->getScheduler()->scheduleDelayedRepeatingTask(new SendUsageTask($this), $period, $period);
         }
 
         new Generator($this);

@@ -20,6 +20,8 @@ protect-world: false
 "alwaysOnSpawn": false
 # Начислять деньги за время в игре?
 "time-fee": true
+# Период отправки данных об онлайне и памяти (0 = отключить)
+"send-usage-period": 5
 
 # Адреса серверов для телепортации к ним
 servers:
